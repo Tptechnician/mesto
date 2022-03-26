@@ -12,12 +12,18 @@
 @import url(../blocks/profile/__activity/profile__activity.css);
 @import url(../blocks/profile/__add-button/profile__add-button.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
-@import url(../blocks/profile/__button/profile__button.css);
 @import url(../blocks/profile/__edit-button/profile__edit-button.css);
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__list/profile__list.css);
 @import url(../blocks/profile/__name/profile__name.css);
-@import url(../blocks/profile/__info-wraper/profile__info-wraper.css);
+
+@import url(../blocks/elements/elements.css);
+@import url(../blocks/element/__description/element__description.css);
+@import url(../blocks/element/__image/element__image.css);
+@import url(../blocks/element/__like/element__like.css);
+@import url(../blocks/element/__like/_active/element__like_active.css);
+@import url(../blocks/element/element.css);
+@import url(../blocks/element/__wraper/element__wraper.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
