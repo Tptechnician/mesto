@@ -1,4 +1,5 @@
 .profile__edit-button {
+    cursor: pointer;
     background-image: url(../../../images/profile-Edit-Button.svg);
     background-position: center;
     border: 1px solid #FFFFFF;

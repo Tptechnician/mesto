@@ -1,4 +1,5 @@
 .profile__add-button {
+    cursor: pointer;
     background-image: url(../../../images/profile-Add-Button.svg);
     background-repeat: no-repeat;
     background-position: center;
