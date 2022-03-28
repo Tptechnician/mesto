@@ -2,6 +2,7 @@
     width: 32px;
     height: 32px;
     background-image: url(../../../images/Close-button.svg);
+    background-position: center;
     background-color: black;
     margin: 0;
     padding: 0;
@@ -10,4 +11,13 @@
     top: -40px;
     right: -40px;
     border: none;
+}
+
+@media(min-width: 320px) and (max-width: 530px) {
+    .popup__close {
+        width: 20px;
+        height: 20px;
+        top: -35px;
+        right: 0px;
+    }
 }
