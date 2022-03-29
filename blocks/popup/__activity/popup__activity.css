@@ -4,10 +4,9 @@
     height: 27px;
     box-sizing: border-box;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    margin: 48px 0 30px;
+    margin-bottom: 53px;
     font-size: 14px;
     line-height: 1.21;
-    margin: 0 0 48px;
 }
 
 @media(min-width: 320px) and (max-width: 530px) {
