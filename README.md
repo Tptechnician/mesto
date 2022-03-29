@@ -14,4 +14,4 @@
 * Реализовано одно диалоговое окно по средствам js.
 
 
-[Ссылка страницы на github pages](https://tptechnician.github.io/yet-another-project/)
+[Ссылка страницы на github pages]( https://tptechnician.github.io/mesto/)
