@@ -1,3 +1,4 @@
+// код для открытие закрытие popup
 let profileeditbutton = document.querySelector('.profile__edit-button');
 let popup = document.querySelector('.popup');
 let popupclose = popup.querySelector('.popup__close');
@@ -20,30 +21,29 @@ function overlayclick(event) {
 }
 
 popup.addEventListener('click', overlayclick);*/
-
+//Переменные для popup
 let form = document.querySelector('.popup__form');
 let nameInput = document.querySelector('.popup__name');
 let jobInput = document.querySelector('.popup__activity');
+let profilename = document.querySelector('.profile__name');
+let profileactivity = document.querySelector('.profile__activity');
 
-/*
+// Код для того что-бы при открытии popup в Input были значения из profile__name и profile__activity
+nameInput.value = profilename.textContent;
+jobInput.value = profileactivity.textContent;
+
+// Функция для редактирования profile__name и profile__activity
 function formSubmitHandler (evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
                                                 // Так мы можем определить свою логику отправки.
                                                 // О том, как это делать, расскажем позже.
 
-    // Получите значение полей jobInput и nameInput из свойства value
+    profilename.textContent = nameInput.value;
+    profileactivity.textContent = jobInput.value;
 
-    // Выберите элементы, куда должны быть вставлены значения полей
-
-    // Вставьте новые значения с помощью textContent
+    togglepopup();
 }
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler);
-
-function onsave(e) {
-
-}
-
-form.addEventListener('submit', onsave);*/
+form.addEventListener('submit', formSubmitHandler);
