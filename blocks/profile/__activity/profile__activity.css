@@ -16,5 +16,6 @@
     .profile__activity {
         font-size: 14px;
         line-height: 1.21;
+        max-width: 280px;
     }
 }
