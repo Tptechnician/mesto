@@ -1,16 +1,21 @@
 // код для открытие закрытие popup
-let profileeditbutton = document.querySelector('.profile__edit-button');
+let profileEditButton = document.querySelector('.profile__edit-button');
 let popup = document.querySelector('.popup');
-let popupclose = popup.querySelector('.popup__close');
+let popupClose = document.querySelector('.popup__close');
 
 
-function togglepopup() {
+function togglePopup() {
     popup.classList.toggle('popup_opened');
+    function substitute() {
+        nameInput.value = profileName.textContent;
+        jobInput.value = profileActivity.textContent;
+    }
+    substitute();
 }
 
-profileeditbutton.addEventListener('click', togglepopup);
+profileEditButton.addEventListener('click', togglePopup);
 
-popupclose.addEventListener('click', togglepopup);
+popupClose.addEventListener('click', togglePopup);
 
 
 /* Код для закрытия popup при клике по overlay
@@ -22,15 +27,11 @@ function overlayclick(event) {
 
 popup.addEventListener('click', overlayclick);*/
 //Переменные для popup
-let form = document.querySelector('.popup__form');
-let nameInput = document.querySelector('.popup__name');
-let jobInput = document.querySelector('.popup__activity');
-let profilename = document.querySelector('.profile__name');
-let profileactivity = document.querySelector('.profile__activity');
-
-// Код для того что-бы при открытии popup в Input были значения из profile__name и profile__activity
-nameInput.value = profilename.textContent;
-jobInput.value = profileactivity.textContent;
+let form = document.forms.formpopup;
+let nameInput = form.elements.inputname;
+let jobInput = form.elements.inputactivity;
+let profileName = document.querySelector('.profile__name');
+let profileActivity = document.querySelector('.profile__activity');
 
 // Функция для редактирования profile__name и profile__activity
 function formSubmitHandler (evt) {
@@ -38,10 +39,10 @@ function formSubmitHandler (evt) {
                                                 // Так мы можем определить свою логику отправки.
                                                 // О том, как это делать, расскажем позже.
 
-    profilename.textContent = nameInput.value;
-    profileactivity.textContent = jobInput.value;
+    profileName.textContent = nameInput.value;
+    profileActivity.textContent = jobInput.value;
 
-    togglepopup();
+    togglePopup();
 }
 
 // Прикрепляем обработчик к форме:
