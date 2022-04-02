@@ -1,4 +1,4 @@
-// код для открытия закрытие popup
+// код для открытия закрытия popup
 let profileEditButton = document.querySelector('.profile__edit-button');
 let popup = document.querySelector('.popup');
 let popupClose = document.querySelector('.popup__close');
@@ -6,7 +6,7 @@ let popupClose = document.querySelector('.popup__close');
 function togglePopup() {
     popup.classList.toggle('popup_opened');
     function substitute() {
-        if (popup.classList.contains("popup_opened") === true){
+        if (popup.classList.contains('popup_opened') === true){
             nameInput.value = profileName.textContent;
             jobInput.value = profileActivity.textContent;
         }
