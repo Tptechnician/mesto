@@ -73,7 +73,7 @@
                             <h2 class="element__description">Карачаево-Черкесская республика</h2>
                             <button class="element__like-button" type="button"></button>
                         </div>
-                    </li>
+                    </li>-->
                 </ul>
             </section>
         </main>
@@ -90,9 +90,30 @@
                     <input class="popup__input" type="text" name="inputactivity" placeholder="О себе">
                     <button class="popup__save" type="submit">Сохранить</button>
                 </form>
-                
             </div>
         </div>
+
+        <div class="popup" id="add-image">
+            <div class="popup__content">
+                <button class="popup__close" id="button-close-add-image" type="button"></button>
+                <h3 class="popup__title">Новое место</h3>
+                <form class="popup__form" name="formpopupadd-image">
+                    <input class="popup__input" type="text" name="inputtitle" placeholder="Название">
+                    <input class="popup__input" type="url" name="inputlink" placeholder="Ссылка на картинку">
+                    <button class="popup__save" type="submit">Сохранить</button>
+                </form>
+            </div>
+        </div>
+
+        <template id="element-template">
+            <li class="element">
+                <img class="element__image" src="" alt="фото">
+                <div class="element__wraper">
+                    <h2 class="element__description"></h2>
+                    <button class="element__like-button" type="button"></button>
+                </div>
+            </li>
+        </template>
     </div>
     <script src="./scripts/index.js"></script>
 </body>
