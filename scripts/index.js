@@ -61,14 +61,10 @@ function formSubmitHandler (evt) {
 // он будет следить за событием “submit” - «отправка»
 form.addEventListener('submit', formSubmitHandler);
 
-
+// Код для добавления карточки 
 let formAddImage = document.forms.formpopupaddimage;
 let titleInput = formAddImage.elements.inputtitle;
 let linkInput = formAddImage.elements.inputlink;
-
-  //let elementTemplate = document.querySelector('#element-template').content;
-  //let elementsCards = document.querySelector('.elements__cards');
-  
 
 
 function formSubmitAddImage (evt) {
@@ -86,6 +82,17 @@ function formSubmitAddImage (evt) {
 }
 
 formAddImage.addEventListener('submit', formSubmitAddImage);
+
+//Код для удаления карточки
+// выберем кнопку удаления
+const deleteButton = document.querySelector('.element__delete-button');
+
+// добавим обработчик
+deleteButton.addEventListener('click', function () {
+  const listItem = deleteButton.closest('.element');
+  listItem.remove();
+});
+
 
 const initialCards = [
     {
