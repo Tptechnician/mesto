@@ -21,6 +21,7 @@ function togglePopup() {
 profileEditButton.addEventListener('click', togglePopup);
 popupClose.addEventListener('click', togglePopup);
 
+// Код для открытия закрытия popup добавления карточек
 function togglePopupAddImage() {
   popupAddImage.classList.toggle('popup_opened');
 }
@@ -60,19 +61,28 @@ function formSubmitHandler (evt) {
 // он будет следить за событием “submit” - «отправка»
 form.addEventListener('submit', formSubmitHandler);
 
+
 let formAddImage = document.forms.formpopupaddimage;
-let titleInput = form.elements.inputtitle;
-let linkInput = form.elements.inputlink;
-let elementDescription = document.querySelector('.element__description');
-let elementImage = document.querySelector('.element__image');
+let titleInput = formAddImage.elements.inputtitle;
+let linkInput = formAddImage.elements.inputlink;
+
+  //let elementTemplate = document.querySelector('#element-template').content;
+  //let elementsCards = document.querySelector('.elements__cards');
+  
+
 
 function formSubmitAddImage (evt) {
   evt.preventDefault();
-
-  elementImage.textContent = linkInput.value;
-  elementDescription.textContent = titleInput.value;
-
+  let elementTemplate = document.querySelector('#element-template').content;
+  let elementsCards = document.querySelector('.elements__cards');
+  const li = elementTemplate.querySelector('.element').cloneNode(true);
+  
+  li.querySelector('.element__description').textContent = titleInput.value;
+  li.querySelector('.element__image').src = `${linkInput.value}`;
+  elementsCards.prepend(li);
   togglePopupAddImage();
+  titleInput.value = '';
+  linkInput.value = '';
 }
 
 formAddImage.addEventListener('submit', formSubmitAddImage);
