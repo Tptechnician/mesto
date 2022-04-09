@@ -1,3 +1,50 @@
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+//Загрузка первых 6 карточек
+const elementsCards = document.querySelector('.elements__cards');
+const elementTemplate = document.querySelector('#element-template');
+
+function addCards() {
+  const cards = initialCards.map(getElement);
+  elementsCards.prepend(...cards);
+}
+
+addCards();
+
+function getElement(element) {
+  const getElementTemplate = elementTemplate.content.cloneNode(true);
+  const description = getElementTemplate.querySelector('.element__description');
+  const image = getElementTemplate.querySelector('.element__image');
+  description.textContent = element.name;
+  image.src = element.link;
+  return getElementTemplate;
+}
+
 // код для открытия закрытия popup
 let profileEditButton = document.querySelector('.profile__edit-button');
 let profileAddButton = document.querySelector('.profile__add-button');
@@ -47,9 +94,7 @@ let profileActivity = document.querySelector('.profile__activity');
 
 // Функция для редактирования profile__name и profile__activity
 function formSubmitHandler (evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-                                                // Так мы можем определить свою логику отправки.
-                                                // О том, как это делать, расскажем позже.
+    evt.preventDefault();
 
     profileName.textContent = nameInput.value;
     profileActivity.textContent = jobInput.value;
@@ -57,8 +102,6 @@ function formSubmitHandler (evt) {
     togglePopup();
 }
 
-// Прикрепляем обработчик к форме:
-// он будет следить за событием “submit” - «отправка»
 form.addEventListener('submit', formSubmitHandler);
 
 // Код для добавления карточки 
@@ -85,39 +128,14 @@ formAddImage.addEventListener('submit', formSubmitAddImage);
 
 //Код для удаления карточки
 // выберем кнопку удаления
-const deleteButton = document.querySelector('.element__delete-button');
+/*const deleteButton = document.querySelector('.element__delete-button');
 
 // добавим обработчик
 deleteButton.addEventListener('click', function () {
   const listItem = deleteButton.closest('.element');
   listItem.remove();
-});
+});*/
 
 
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
+
 
