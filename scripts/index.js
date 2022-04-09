@@ -28,9 +28,6 @@ const initialCards = [
 //Загрузка первых 6 карточек
 const elementsCards = document.querySelector('.elements__cards');
 const elementTemplate = document.querySelector('#element-template');
-let formAddImage = document.forms.formpopupaddimage;
-let titleInput = formAddImage.elements.inputtitle;
-let linkInput = formAddImage.elements.inputlink;
 
 function addCards() {
   const cards = initialCards.map(getElement);
@@ -44,11 +41,13 @@ function getElement(element) {
   const description = getElementTemplate.querySelector('.element__description');
   const image = getElementTemplate.querySelector('.element__image');
   const deleteButton = getElementTemplate.querySelector('.element__delete-button');
+  const buttonLike = getElementTemplate.querySelector('.element__like-button');
 
   description.textContent = element.name;
   image.src = element.link;
 
   deleteButton.addEventListener('click', removeCard);
+  buttonLike.addEventListener('click', like);
 
   return getElementTemplate;
 }
@@ -58,7 +57,16 @@ function removeCard(evt) {
   elementClick.remove();
 }
 
+function like(evt) {
+  buttonLike.evt.target.classList.toggle('element__like-button_active');
+}
+
+
 // Код для добавления карточки 
+let formAddImage = document.forms.formpopupaddimage;
+let titleInput = formAddImage.elements.inputtitle;
+let linkInput = formAddImage.elements.inputlink;
+
 function formSubmitAddImage (evt) {
   evt.preventDefault();
   const elementTemplate = document.querySelector('#element-template').content;
@@ -136,3 +144,10 @@ function formSubmitHandler (evt) {
 }
 
 form.addEventListener('submit', formSubmitHandler);
+
+//Кнопка лайк
+
+
+
+
+
