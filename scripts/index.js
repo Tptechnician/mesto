@@ -45,26 +45,9 @@ function getElement(element) {
   const image = getElementTemplate.querySelector('.element__image');
   const deleteButton = getElementTemplate.querySelector('.element__delete-button');
   const buttonLike = getElementTemplate.querySelector('.element__like-button');
-
+  
   description.textContent = element.name;
   image.src = element.link;
-
-  function formSubmitAddImage (evt) {
-    evt.preventDefault();
-    const elementTemplate = document.querySelector('#element-template').content;
-    const elementsCards = document.querySelector('.elements__cards');
-    const li = elementTemplate.querySelector('.element').cloneNode(true);
-    
-    li.querySelector('.element__description').textContent = titleInput.value;
-    li.querySelector('.element__image').src = linkInput.value;
-  
-    elementsCards.prepend(li);
-    togglePopupAddImage();
-  
-    titleInput.value = '';
-    linkInput.value = '';
-  }
-  
   
   formAddImage.addEventListener('submit', formSubmitAddImage);
   deleteButton.addEventListener('click', removeCard);
@@ -73,15 +56,30 @@ function getElement(element) {
   return getElementTemplate;
   
 }
-const buttonLike = elementTemplate.querySelectorAll('.element__like-button');
-console.log(buttonLike);
+
+function formSubmitAddImage (evt) {
+  evt.preventDefault();
+
+  let data = getElement({
+    name: `${titleInput.value}`,
+    link: `${linkInput.value}`
+  })
+
+  elementsCards.prepend(data);
+  togglePopupAddImage();
+
+  titleInput.value = '';
+  linkInput.value = '';
+}
+
+
+
 function removeCard(evt) {
   const elementClick = evt.target.closest('.element');
   elementClick.remove();
 }
 
 function like(evt) {
-  const buttonLike = elementTemplate.querySelectorAll('.element__like-button');
   evt.target.classList.toggle('element__like-button_active');
 }
 
