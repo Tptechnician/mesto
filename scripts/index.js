@@ -31,6 +31,24 @@ const elementTemplate = document.querySelector('#element-template');
 let formAddImage = document.forms.formpopupaddimage;
 let titleInput = formAddImage.elements.inputtitle;
 let linkInput = formAddImage.elements.inputlink;
+let profileEditButton = document.querySelector('.profile__edit-button');
+let profileAddButton = document.querySelector('.profile__add-button');
+let popup = document.querySelector('.popup');
+let popupClose = document.querySelector('.popup__close');
+let popupCloseAddImage = document.querySelector('#button-close-add-image');
+let popupAddImage = document.querySelector('#add-image');
+let form = document.forms.formpopup;
+let nameInput = form.elements.inputname;
+let jobInput = form.elements.inputactivity;
+let profileName = document.querySelector('.profile__name');
+let profileActivity = document.querySelector('.profile__activity');
+let popupViewImage = document.querySelector('.popup__view-image');
+//const image = getElementTemplate.querySelector('.element__image');
+
+function togglePopupViewImage () {
+    popupViewImage.classList.toggle('popup_opened');
+  }
+  //image.addEventListener('click', togglePopupViewImage);
 
 function addCards() {
   const cards = initialCards.map(getElement);
@@ -73,7 +91,6 @@ function formSubmitAddImage (evt) {
 }
 
 
-
 function removeCard(evt) {
   const elementClick = evt.target.closest('.element');
   elementClick.remove();
@@ -83,19 +100,6 @@ function like(evt) {
   evt.target.classList.toggle('element__like-button_active');
 }
 
-
-// Код для добавления карточки 
-
-
-
-
-// код для открытия закрытия popup
-let profileEditButton = document.querySelector('.profile__edit-button');
-let profileAddButton = document.querySelector('.profile__add-button');
-let popup = document.querySelector('.popup');
-let popupClose = document.querySelector('.popup__close');
-let popupCloseAddImage = document.querySelector('#button-close-add-image');
-let popupAddImage = document.querySelector('#add-image');
 
 function togglePopup() {
     popup.classList.toggle('popup_opened');
@@ -112,7 +116,6 @@ function togglePopup() {
 profileEditButton.addEventListener('click', togglePopup);
 popupClose.addEventListener('click', togglePopup);
 
-// Код для открытия закрытия popup добавления карточек
 function togglePopupAddImage() {
   popupAddImage.classList.toggle('popup_opened');
 }
@@ -120,24 +123,6 @@ function togglePopupAddImage() {
 profileAddButton.addEventListener('click', togglePopupAddImage);
 popupCloseAddImage.addEventListener('click', togglePopupAddImage);
 
-
-/* Код для закрытия popup при клике по overlay
-function overlayclick(event) {
-    if (event.target === event.currentTarget) {
-        togglepopup();
-    }
-}
-
-popup.addEventListener('click', overlayclick);*/
-
-//Переменные для popup
-let form = document.forms.formpopup;
-let nameInput = form.elements.inputname;
-let jobInput = form.elements.inputactivity;
-let profileName = document.querySelector('.profile__name');
-let profileActivity = document.querySelector('.profile__activity');
-
-// Функция для редактирования profile__name и profile__activity
 function formSubmitHandler (evt) {
     evt.preventDefault();
 
@@ -149,9 +134,11 @@ function formSubmitHandler (evt) {
 
 form.addEventListener('submit', formSubmitHandler);
 
-//Кнопка лайк
+/* Код для закрытия popup при клике по overlay
+function overlayclick(event) {
+    if (event.target === event.currentTarget) {
+        togglepopup();
+    }
+}
 
-
-
-
-
+popup.addEventListener('click', overlayclick);*/
