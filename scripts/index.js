@@ -28,6 +28,9 @@ const initialCards = [
 //Загрузка первых 6 карточек
 const elementsCards = document.querySelector('.elements__cards');
 const elementTemplate = document.querySelector('#element-template');
+let formAddImage = document.forms.formpopupaddimage;
+let titleInput = formAddImage.elements.inputtitle;
+let linkInput = formAddImage.elements.inputlink;
 
 function addCards() {
   const cards = initialCards.map(getElement);
@@ -46,44 +49,47 @@ function getElement(element) {
   description.textContent = element.name;
   image.src = element.link;
 
+  function formSubmitAddImage (evt) {
+    evt.preventDefault();
+    const elementTemplate = document.querySelector('#element-template').content;
+    const elementsCards = document.querySelector('.elements__cards');
+    const li = elementTemplate.querySelector('.element').cloneNode(true);
+    
+    li.querySelector('.element__description').textContent = titleInput.value;
+    li.querySelector('.element__image').src = linkInput.value;
+  
+    elementsCards.prepend(li);
+    togglePopupAddImage();
+  
+    titleInput.value = '';
+    linkInput.value = '';
+  }
+  
+  
+  formAddImage.addEventListener('submit', formSubmitAddImage);
   deleteButton.addEventListener('click', removeCard);
   buttonLike.addEventListener('click', like);
 
   return getElementTemplate;
+  
 }
-
+const buttonLike = elementTemplate.querySelectorAll('.element__like-button');
+console.log(buttonLike);
 function removeCard(evt) {
   const elementClick = evt.target.closest('.element');
   elementClick.remove();
 }
 
 function like(evt) {
-  buttonLike.evt.target.classList.toggle('element__like-button_active');
+  const buttonLike = elementTemplate.querySelectorAll('.element__like-button');
+  evt.target.classList.toggle('element__like-button_active');
 }
 
 
 // Код для добавления карточки 
-let formAddImage = document.forms.formpopupaddimage;
-let titleInput = formAddImage.elements.inputtitle;
-let linkInput = formAddImage.elements.inputlink;
 
-function formSubmitAddImage (evt) {
-  evt.preventDefault();
-  const elementTemplate = document.querySelector('#element-template').content;
-  const elementsCards = document.querySelector('.elements__cards');
-  const li = elementTemplate.querySelector('.element').cloneNode(true);
-  
-  li.querySelector('.element__description').textContent = titleInput.value;
-  li.querySelector('.element__image').src = linkInput.value;
 
-  elementsCards.prepend(li);
-  togglePopupAddImage();
 
-  titleInput.value = '';
-  linkInput.value = '';
-}
-
-formAddImage.addEventListener('submit', formSubmitAddImage);
 
 // код для открытия закрытия popup
 let profileEditButton = document.querySelector('.profile__edit-button');
