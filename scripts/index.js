@@ -43,12 +43,9 @@ let jobInput = form.elements.inputactivity;
 let profileName = document.querySelector('.profile__name');
 let profileActivity = document.querySelector('.profile__activity');
 let popupViewImage = document.querySelector('.popup__view-image');
-//const image = getElementTemplate.querySelector('.element__image');
 
-function togglePopupViewImage () {
-    popupViewImage.classList.toggle('popup_opened');
-  }
-  //image.addEventListener('click', togglePopupViewImage);
+
+const popupCloseViewImage = document.querySelector('.button-close-view-image');
 
 function addCards() {
   const cards = initialCards.map(getElement);
@@ -64,16 +61,33 @@ function getElement(element) {
   const deleteButton = getElementTemplate.querySelector('.element__delete-button');
   const buttonLike = getElementTemplate.querySelector('.element__like-button');
   
+  
   description.textContent = element.name;
   image.src = element.link;
   
   formAddImage.addEventListener('submit', formSubmitAddImage);
   deleteButton.addEventListener('click', removeCard);
   buttonLike.addEventListener('click', like);
-
+  image.addEventListener('click', togglePopupViewImage);
+  description.addEventListener('click', togglePopupViewImage);
   return getElementTemplate;
   
 }
+
+let popupImage = document.querySelector('.popup__image');
+let popupTitleViewImage = document.querySelector('.popup__title__view-image');
+const description = document.querySelector('.element__description');
+const image = document.querySelector('.element__image');
+
+function togglePopupViewImage (evt) {
+  popupViewImage.classList.toggle('popup_opened');
+  const src = this.currentSrc;
+  popupImage.src = src;
+  popupTitleViewImage.textContent = description.textContent;
+  
+}
+
+popupCloseViewImage.addEventListener('click', togglePopupViewImage);
 
 function formSubmitAddImage (evt) {
   evt.preventDefault();
@@ -123,6 +137,8 @@ function togglePopupAddImage() {
 profileAddButton.addEventListener('click', togglePopupAddImage);
 popupCloseAddImage.addEventListener('click', togglePopupAddImage);
 
+
+
 function formSubmitHandler (evt) {
     evt.preventDefault();
 
@@ -142,3 +158,6 @@ function overlayclick(event) {
 }
 
 popup.addEventListener('click', overlayclick);*/
+
+
+

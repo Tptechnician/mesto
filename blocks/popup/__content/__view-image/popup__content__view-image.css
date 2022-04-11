@@ -1,0 +1,6 @@
+.popup__content__view-image {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+}
