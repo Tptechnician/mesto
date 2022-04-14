@@ -25,7 +25,7 @@ const initialCards = [
   }
 ];
 
-//Загрузка первых 6 карточек
+
 const elementsCards = document.querySelector('.elements__cards');
 const elementTemplate = document.querySelector('.element-template');
 const profileAddButton = document.querySelector('.profile__add-button');
