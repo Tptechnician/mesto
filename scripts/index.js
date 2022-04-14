@@ -43,9 +43,9 @@ const popupAddImage = document.querySelector('.addimage');
 const popupCloseAddImage = document.querySelector('.close-add-image');
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity');
-const form = document.forms.formpopup;
-const nameInput = form.elements.inputname;
-const jobInput = form.elements.inputactivity;
+const formPopupProfile = document.forms.formpopup;
+const nameInput = formPopupProfile.elements.inputname;
+const jobInput = formPopupProfile.elements.inputactivity;
 
 //Загрузка карточек при загрузке страницы
 function addCards() {
@@ -139,7 +139,7 @@ popupProfileCloseButton.addEventListener('click', () => togglePopup(popupProfile
 
 
 //submit формы редоктирования профиля
-function SubmitHandlerform (evt) {
+function submitHandlerform (evt) {
     evt.preventDefault();
 
     profileName.textContent = nameInput.value;
@@ -148,9 +148,9 @@ function SubmitHandlerform (evt) {
     togglePopup(popupProfile);
 }
 
-form.addEventListener('submit', SubmitHandlerform);
+formPopupProfile.addEventListener('submit', submitHandlerform);
 
- /*//Код для закрытия popup при клике по overlay
+ /*//Код для закрытия popup при клике по overlay (переделать чтобы работала на всех popup)
 function overlayclick(event) {
     if (event.target === event.currentTarget) {
         togglepopup();
