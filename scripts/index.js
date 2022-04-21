@@ -150,12 +150,19 @@ function submitHandlerform (evt) {
 
 formPopupProfile.addEventListener('submit', submitHandlerform);
 
- /*//Код для закрытия popup при клике по overlay (переделать чтобы работала на всех popup)
-function overlayclick(event) {
-    if (event.target === event.currentTarget) {
-        togglepopup();
-        togglePopupAddImage();
-    }
-}
+//Закрытия popup при клике по overlay 
 
-popup.addEventListener('click', overlayclick);*/
+const popup = Array.from(document.querySelectorAll('.popup'));
+  // Обойдём все элементы полученной коллекции
+popup.forEach((popup) => {
+  // каждому полю добавим обработчик события
+  popup.addEventListener('keydown', (event) => {
+    if (event.key === 27) {
+      togglePopup(popup);
+  }});
+  popup.addEventListener('click', (event) => {
+    if (event.target === event.currentTarget) {
+      togglePopup(popup);
+  }});
+  
+});
