@@ -44,8 +44,24 @@
                 <button class="popup__close" type="button"></button>
                 <h3 class="popup__title">Редактировать профиль</h3>
                 <form class="popup__form" name="formpopup">
-                    <input class="popup__input" type="text" name="inputname" placeholder="Имя">
-                    <input class="popup__input" type="text" name="inputactivity" placeholder="О себе">
+                    <input 
+                        class="popup__input" 
+                        type="text" 
+                        name="inputname" 
+                        placeholder="Имя"
+                        minlength="2"
+                        maxlength="40"
+                        required
+                    >
+                    <input 
+                        class="popup__input" 
+                        type="text" 
+                        name="inputactivity" 
+                        placeholder="О себе"
+                        minlength="2"
+                        maxlength="200"
+                        required
+                    >
                     <button class="popup__save" type="submit">Сохранить</button>
                 </form>
             </div>
@@ -56,8 +72,18 @@
                 <button class="popup__close close-add-image" type="button"></button>
                 <h3 class="popup__title">Новое место</h3>
                 <form class="popup__form" name="formpopupaddimage">
-                    <input class="popup__input" type="text" name="inputtitle" placeholder="Название">
-                    <input class="popup__input" type="url" name="inputlink" placeholder="Ссылка на картинку">
+                    <input 
+                        class="popup__input" 
+                        type="text" 
+                        name="inputtitle" 
+                        placeholder="Название"
+                    >
+                    <input 
+                        class="popup__input" 
+                        type="url" 
+                        name="inputlink" 
+                        placeholder="Ссылка на картинку"
+                    >
                     <button class="popup__save" type="submit">Сохранить</button>
                 </form>
             </div>
