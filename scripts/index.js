@@ -155,14 +155,13 @@ formPopupProfile.addEventListener('submit', submitHandlerform);
 const popup = Array.from(document.querySelectorAll('.popup'));
   // Обойдём все элементы полученной коллекции
 popup.forEach((popup) => {
-  // каждому полю добавим обработчик события
-  popup.addEventListener('keydown', (event) => {
-    if (event.key === 27) {
+  // каждому добавим обработчик события
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === "Escape" && popup.classList.contains('popup_opened')) {
       togglePopup(popup);
   }});
-  popup.addEventListener('click', (event) => {
-    if (event.target === event.currentTarget) {
+  popup.addEventListener('click', (evt) => {
+    if (evt.target === evt.currentTarget) {
       togglePopup(popup);
   }});
-  
 });
