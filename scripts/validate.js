@@ -50,22 +50,39 @@ enableValidation({
   //inputErrorClass: 'popup__input_type_error',
   //errorClass: 'popup__error_visible'
 });*/
-
+/*
 function toggleButton(config, form) {
   const button = document.querySelector(config.submitButtonSelector);
   
   button.disabled = !form.checkValidity();
   button.classList.toggle('popup__save_no-active', !form.checkValidity());
 }
-toggleButton(config, form);
-//console.log(inputList);
+toggleButton(config, form);*/
+//
+
+function showInputError(form, input, errorMessage) {
+  const errorElement = form.querySelector(`#${input.id}-error`);
+  input.classList.add('popup__input_type_error');
+  errorElement.textContent = errorMessage;
+  //errorElement.classList.add('form__input-error_active');
+};
+
+function hideInputError(form, input) {
+  const errorElement = form.querySelector(`#${input.id}-error`);
+  input.classList.remove('popup__input_type_error');
+  //errorElement.classList.remove('form__input-error_active');
+  errorElement.textContent = '';
+};
+
+
 function isValid(form, input) {
-  const errorInput = form.querySelector(`#${input.id}-error`);
   
   if (!input.validity.valid) {
-    errorInput.textContent = input.validationMessage;
+    showInputError(form, input, input.validationMessage);
+    console.log('не валидна');
   } else {
-    errorInput.textContent = '';
+    hideInputError(form, input);
+    console.log('валидна');
   }
 
 }; 
