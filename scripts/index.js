@@ -47,6 +47,18 @@ const formPopupProfile = document.forms.formpopup;
 const nameInput = formPopupProfile.elements.inputname;
 const jobInput = formPopupProfile.elements.inputactivity;
 
+
+function resetError () {
+  const errorElement = Array.from(document.querySelectorAll('.popup__form-error'));
+  const errorInput = Array.from(document.querySelectorAll('.popup__input'));
+  errorElement.forEach((errorElement) => {
+    errorElement.textContent = '';
+  });
+  errorInput.forEach((errorInput) => {
+    errorInput.classList.remove('popup__input_type_error');
+  });
+}
+
 //Загрузка карточек при загрузке страницы
 function addCards() {
   const cards = initialCards.map(getCard);
@@ -91,8 +103,15 @@ popupCloseViewImage.addEventListener('click', () => togglePopup(popupViewImage))
 
 
 //Открытие, закрытие popup добавления карточки
-profileAddButton.addEventListener('click', () => togglePopup(popupAddImage));
-popupCloseAddImage.addEventListener('click', () => togglePopup(popupAddImage));
+profileAddButton.addEventListener('click', () => {
+  resetError ();
+  togglePopup(popupAddImage)
+});
+popupCloseAddImage.addEventListener('click', () => {
+  titleInput.value = '';
+  linkInput.value = '';
+  togglePopup(popupAddImage)
+});
 
 
 //Добавление новой карточки
@@ -127,7 +146,9 @@ function like(evt) {
 
 //Открытие, закрытие popup редоктирования профиля
 profileEditButton.addEventListener('click', () => substitute());
+
 function substitute() {
+  resetError ();
   nameInput.value = profileName.textContent;
   jobInput.value = profileActivity.textContent;
 
@@ -158,9 +179,13 @@ popup.forEach((popup) => {
   document.addEventListener('keydown', (evt) => {
     if (evt.key === "Escape" && popup.classList.contains('popup_opened')) {
       togglePopup(popup);
+      titleInput.value = '';
+      linkInput.value = '';
   }});
   popup.addEventListener('click', (evt) => {
     if (evt.target === evt.currentTarget) {
       togglePopup(popup);
+      titleInput.value = '';
+      linkInput.value = '';
   }});
 });
