@@ -127,7 +127,6 @@ function like(evt) {
 
 //Открытие, закрытие popup редоктирования профиля
 profileEditButton.addEventListener('click', () => substitute());
-hideInputError(form, input);
 function substitute() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileActivity.textContent;
