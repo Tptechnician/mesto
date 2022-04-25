@@ -1,51 +1,24 @@
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-
 const elementsCards = document.querySelector('.elements__cards');
 const elementTemplate = document.querySelector('.element-template');
 const profileAddButton = document.querySelector('.profile__add-button');
 const formAddImage = document.forms.formpopupaddimage;
 const titleInput = formAddImage.elements.inputtitle;
 const linkInput = formAddImage.elements.inputlink;
-const popupViewImage = document.querySelector('.viewimage');
+const popupViewImage = document.querySelector('.popup__viewimage');
 const popupImage = document.querySelector('.popup__image');
 const popupTitleViewImage = document.querySelector('.popup__title_viewimage');
 const popupCloseViewImage = document.querySelector('.close-viewimage');
 const profileEditButton = document.querySelector('.profile__edit-button');
-const popupProfile = document.querySelector('.popuprofile');
+const popupProfile = document.querySelector('.popup__rofile');
 const popupProfileCloseButton = popupProfile.querySelector('.popup__close');
-const popupAddImage = document.querySelector('.addimage');
+const popupAddImage = document.querySelector('.popup__addimage');
 const popupCloseAddImage = document.querySelector('.close-add-image');
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity');
-const formPopupProfile = document.forms.formpopup;
+const formPopupProfile = document.forms.formPopup;
 const nameInput = formPopupProfile.elements.inputname;
 const jobInput = formPopupProfile.elements.inputactivity;
+
 
 //Сброс ошибок в input
 function resetError () {
@@ -68,11 +41,11 @@ function addCards() {
 addCards();
 
 function getCard(element) {
-  const getElementTemplate = elementTemplate.content.cloneNode(true);
-  const description = getElementTemplate.querySelector('.element__description');
-  const image = getElementTemplate.querySelector('.element__image');
-  const deleteButton = getElementTemplate.querySelector('.element__delete-button');
-  const buttonLike = getElementTemplate.querySelector('.element__like-button');
+  const template = elementTemplate.content.cloneNode(true);
+  const description = template.querySelector('.element__description');
+  const image = template.querySelector('.element__image');
+  const deleteButton = template.querySelector('.element__delete-button');
+  const buttonLike = template.querySelector('.element__like-button');
     
   description.textContent = element.name;
   image.src = element.link;
@@ -80,10 +53,10 @@ function getCard(element) {
 
   formAddImage.addEventListener('submit', submitAddImageForm);
   deleteButton.addEventListener('click', removeCard);
-  buttonLike.addEventListener('click', like);
+  buttonLike.addEventListener('click', togglelike);
   image.addEventListener('click', () => openPopupViewImage(element));
   
-  return getElementTemplate;
+  return template;
 }
 
 function togglePopup(popup) {
@@ -92,6 +65,7 @@ function togglePopup(popup) {
 
 //Просмотр img из карточки
 function openPopupViewImage(element) {
+
   popupImage.src = element.link;
   popupImage.alt = element.name; 
   popupTitleViewImage.textContent = element.name;
@@ -119,8 +93,8 @@ function submitAddImageForm (evt) {
   evt.preventDefault();
 
   let data = getCard({
-    name: `${titleInput.value}`,
-    link: `${linkInput.value}`
+    name: titleInput.value,
+    link: linkInput.value
   })
 
   elementsCards.prepend(data);
@@ -139,15 +113,15 @@ function removeCard(evt) {
 
 
 // Лайк
-function like(evt) {
+function togglelike(evt) {
   evt.target.classList.toggle('element__like-button_active');
 }
 
 
 //Открытие, закрытие popup редоктирования профиля
-profileEditButton.addEventListener('click', () => substitute());
+profileEditButton.addEventListener('click', () => handleOpenProfilePopup());
 
-function substitute() {
+function handleOpenProfilePopup() {
   resetError ();
   nameInput.value = profileName.textContent;
   jobInput.value = profileActivity.textContent;

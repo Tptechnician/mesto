@@ -68,5 +68,3 @@ enableValidation ({
   inactiveButtonClass: 'popup__save_no-active',
   inputErrorClass: 'popup__input_type_error'
 });
-
-
