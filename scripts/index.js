@@ -47,7 +47,7 @@ const formPopupProfile = document.forms.formpopup;
 const nameInput = formPopupProfile.elements.inputname;
 const jobInput = formPopupProfile.elements.inputactivity;
 
-
+//Сброс ошибок в input
 function resetError () {
   const errorElement = Array.from(document.querySelectorAll('.popup__form-error'));
   const errorInput = Array.from(document.querySelectorAll('.popup__input'));
@@ -170,18 +170,18 @@ function submitHandlerform (evt) {
 
 formPopupProfile.addEventListener('submit', submitHandlerform);
 
-//Закрытия popup при клике по overlay 
-
+//Закрытия popup при клике по overlay и нажатия на Esc
 const popup = Array.from(document.querySelectorAll('.popup'));
-  // Обойдём все элементы полученной коллекции
+
 popup.forEach((popup) => {
-  // каждому добавим обработчик события
+
   document.addEventListener('keydown', (evt) => {
     if (evt.key === "Escape" && popup.classList.contains('popup_opened')) {
       togglePopup(popup);
       titleInput.value = '';
       linkInput.value = '';
   }});
+
   popup.addEventListener('click', (evt) => {
     if (evt.target === evt.currentTarget) {
       togglePopup(popup);
