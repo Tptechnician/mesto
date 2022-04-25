@@ -1,64 +1,11 @@
-/*
-// Включение валидации форм
-function enableValidation (config) {
-  const form = Array.from(document.querySelector(config.formSelector));
-  console.log(form);
-  const inputs = form.querySelectorAll(config.inputSelector);
-  
-  inputs.forEach(element => {
-    element.addEventListener('input', (event) => handleFormInput(event, form, config));
-  });
 
-  form.addEventListener('submit', (event) => handleFormSubmit(event, form));
-
-  toggleButton(form, config);
-}
-
-// Обработка событий валидации форм
-function handleFormSubmit(event, form) {
-  event.preventDefault();
-}
-
-//
-function handleFormInput(event, form, config) {
-  const input = event.target;
-  const errorInput = document.querySelector(`#${input.id}-error`);
-
-  if (input.validity.valid) {
-    errorInput.textContent = '';
-  } else {
-    errorInput.textContent = input.validationMessage;
-  }
-
-  toggleButton(form, config);
-}
-
-//Блокировка кнопки
-function toggleButton(form, config) {
-  const button = document.querySelector(config.submitButtonSelector);
-  button.disabled = !form.checkValidity();
-  button.classList.toggle('popup__save_no-active', !form.checkValidity());
-}
-
-
-
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save',
-  //inactiveButtonClass: 'popup__button_disabled',
-  //inputErrorClass: 'popup__input_type_error',
-  //errorClass: 'popup__error_visible'
-});*/
-/*
 function toggleButton(config, form) {
   const button = document.querySelector(config.submitButtonSelector);
-  
   button.disabled = !form.checkValidity();
   button.classList.toggle('popup__save_no-active', !form.checkValidity());
 }
-toggleButton(config, form);*/
-//
+
+//toggleButton(config, form);
 
 function showInputError(form, input, errorMessage) {
   const errorElement = form.querySelector(`#${input.id}-error`);
@@ -73,14 +20,15 @@ function hideInputError(form, input) {
 };
 
 
-function isValid(form, input) {
+function isValid(config, form, input) {
   
   if (!input.validity.valid) {
     showInputError(form, input, input.validationMessage);
+    
   } else {
     hideInputError(form, input);
   }
-
+  toggleButton(config, form);
 }; 
 
 function setEventListeners(config, form) {
@@ -95,7 +43,8 @@ function setEventListeners(config, form) {
     input.addEventListener('input', () => {
       // Внутри колбэка вызовем isValid,
       // передав ей форму и проверяемый элемент
-      isValid(form, input)
+      isValid(config, form, input)
+      
     });
   });
 };
@@ -110,7 +59,7 @@ function enableValidation (config) {
     });
     
     setEventListeners(config, form);
-    
+    toggleButton(config, form);
   });
   
 }
