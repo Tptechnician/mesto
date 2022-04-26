@@ -10,23 +10,24 @@
 
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__activity/profile__activity.css);
-@import url(../blocks/profile/__add__button/profile__add__button.css);
+@import url(../blocks/profile/__add-button/profile__add-button.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
-@import url(../blocks/profile/__edit__button/profile__edit__button.css);
+@import url(../blocks/profile/__edit-button/profile__edit-button.css);
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__list/profile__list.css);
-@import url(../blocks/profile/__list__line/profile__list__line.css);
+@import url(../blocks/profile/__list-line/profile__list-line.css);
 @import url(../blocks/profile/__name/profile__name.css);
 
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/elements/__cards/elements__cards.css);
 @import url(../blocks/element/__description/element__description.css);
 @import url(../blocks/element/__image/element__image.css);
-@import url(../blocks/element/__like__button/element__like__button.css);
-@import url(../blocks/element/__delete__button/element__delete__button.css);
-@import url(../blocks/element/__like__button/_active/element__like-button_active.css);
+@import url(../blocks/element/__like-button/element__like-button.css);
+@import url(../blocks/element/__delete-button/element__delete-button.css);
+@import url(../blocks/element/__like-button/_active/element__like-button_active.css);
 @import url(../blocks/element/element.css);
 @import url(../blocks/element/__wraper/element__wraper.css);
+@import url(../blocks/element/__view-image-button/element__view-image-button.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
@@ -43,5 +44,5 @@
 @import url(../blocks/popup/__title/_viewimage/popup__title_viewimage.css);
 @import url(../blocks/popup/__save/_no-active/popup__save_no-active.css);
 @import url(../blocks/popup/__input/_type_error/popup__input_type_error.css);
-@import url(../blocks/popup/__form__error/popup__form__error.css);
+@import url(../blocks/popup/__form-error/popup__form-error.css);
 @import url(../blocks/popup/_type_background/popup_type_background.css);
