@@ -1,28 +1,28 @@
 const elementsCards = document.querySelector('.elements__cards');
-const elementTemplate = document.querySelector('.element-template');
-const profileAddButton = document.querySelector('.profile__add-button');
+const elementTemplate = document.querySelector('.element__template');
+const profileAddButton = document.querySelector('.profile__add__button');
 const formAddImage = document.forms.formPopupAddImage;
-const titleInput = formAddImage.elements.inputtitle;
-const linkInput = formAddImage.elements.inputlink;
+const titleInput = formAddImage.elements.inputTitle;
+const linkInput = formAddImage.elements.inputLink;
 const popupViewImage = document.querySelector('.popup_type_viewimage');
 const popupImage = document.querySelector('.popup__image');
 const popupTitleViewImage = document.querySelector('.popup__title_viewimage');
-const popupCloseViewImage = document.querySelector('.popup__close-viewimage');
-const profileEditButton = document.querySelector('.profile__edit-button');
+const popupCloseViewImage = document.querySelector('.popup__close__viewimage');
+const profileEditButton = document.querySelector('.profile__edit__button');
 const popupProfile = document.querySelector('.popup_type_profile');
 const popupProfileCloseButton = popupProfile.querySelector('.popup__close');
 const popupAddImage = document.querySelector('.popup_type_addimage');
-const popupCloseAddImage = document.querySelector('.popup__close-addimage');
+const popupCloseAddImage = document.querySelector('.popup__close__addimage');
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity');
 const formPopupProfile = document.forms.formPopup;
-const nameInput = formPopupProfile.elements.inputname;
-const jobInput = formPopupProfile.elements.inputactivity;
+const nameInput = formPopupProfile.elements.inputName;
+const jobInput = formPopupProfile.elements.inputActivity;
 const popup = Array.from(document.querySelectorAll('.popup'));
 
 //Сброс ошибок в input
 function resetError () {
-  const errorElement = Array.from(document.querySelectorAll('.popup__form-error'));
+  const errorElement = Array.from(document.querySelectorAll('.popup__form__error'));
   const errorInput = Array.from(document.querySelectorAll('.popup__input'));
   errorElement.forEach((errorElement) => {
     errorElement.textContent = '';
@@ -45,8 +45,8 @@ function getCard(element) {
   const template = elementTemplate.content.cloneNode(true);
   const description = template.querySelector('.element__description');
   const image = template.querySelector('.element__image');
-  const deleteButton = template.querySelector('.element__delete-button');
-  const buttonLike = template.querySelector('.element__like-button');
+  const deleteButton = template.querySelector('.element__delete__button');
+  const buttonLike = template.querySelector('.element__like__button');
     
   description.textContent = element.name;
   image.src = element.link;
@@ -112,7 +112,7 @@ function removeCard(evt) {
 
 // Лайк
 function togglelike(evt) {
-  evt.target.classList.toggle('element__like-button_active');
+  evt.target.classList.toggle('element__like__button_active');
 }
 
 
