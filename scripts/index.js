@@ -18,7 +18,7 @@ const profileActivity = document.querySelector('.profile__activity');
 const formPopupProfile = document.forms.formPopup;
 const nameInput = formPopupProfile.elements.inputname;
 const jobInput = formPopupProfile.elements.inputactivity;
-
+const popup = Array.from(document.querySelectorAll('.popup'));
 
 //Сброс ошибок в input
 function resetError () {
@@ -31,6 +31,7 @@ function resetError () {
     errorInput.classList.remove('popup__input_type_error');
   });
 }
+
 
 //Загрузка карточек при загрузке страницы
 function addCards() {
@@ -59,9 +60,20 @@ function getCard(element) {
   return template;
 }
 
-function togglePopup(popup) {
-  popup.classList.toggle('popup_opened');
+
+// Открытие Popup
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupEscape);
 }
+
+
+// Закрытие Popup
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupEscape);
+}
+
 
 //Просмотр img из карточки
 function openPopupViewImage(element) {
@@ -70,22 +82,8 @@ function openPopupViewImage(element) {
   popupImage.alt = element.name; 
   popupTitleViewImage.textContent = element.name;
 
-  togglePopup(popupViewImage);
+  openPopup(popupViewImage);
 }
-
-popupCloseViewImage.addEventListener('click', () => togglePopup(popupViewImage));
-
-
-//Открытие, закрытие popup добавления карточки
-profileAddButton.addEventListener('click', () => {
-  resetError ();
-  togglePopup(popupAddImage)
-});
-popupCloseAddImage.addEventListener('click', () => {
-  titleInput.value = '';
-  linkInput.value = '';
-  togglePopup(popupAddImage)
-});
 
 
 //Добавление новой карточки
@@ -98,7 +96,7 @@ function submitAddImageForm (evt) {
   })
 
   elementsCards.prepend(data);
-  togglePopup(popupAddImage);
+  closePopup(popupAddImage);
 
   titleInput.value = '';
   linkInput.value = '';
@@ -118,18 +116,15 @@ function togglelike(evt) {
 }
 
 
-//Открытие, закрытие popup редоктирования профиля
-profileEditButton.addEventListener('click', () => handleOpenProfilePopup());
-
+//Открытие popup редоктирования профиля
 function handleOpenProfilePopup() {
   resetError ();
+
   nameInput.value = profileName.textContent;
   jobInput.value = profileActivity.textContent;
 
-  togglePopup(popupProfile)
+  openPopup(popupProfile)
 }
-
-popupProfileCloseButton.addEventListener('click', () => togglePopup(popupProfile));
 
 
 //submit формы редоктирования профиля
@@ -139,27 +134,44 @@ function submitHandlerform (evt) {
     profileName.textContent = nameInput.value;
     profileActivity.textContent = jobInput.value;
 
-    togglePopup(popupProfile);
+    closePopup(popupProfile);
 }
 
-formPopupProfile.addEventListener('submit', submitHandlerform);
 
-//Закрытия popup при клике по overlay и нажатия на Esc
-const popup = Array.from(document.querySelectorAll('.popup'));
-
+//Закрытия popup при клике по overlay
 popup.forEach((popup) => {
-
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key === "Escape" && popup.classList.contains('popup_opened')) {
-      togglePopup(popup);
-      titleInput.value = '';
-      linkInput.value = '';
-  }});
-
   popup.addEventListener('click', (evt) => {
     if (evt.target === evt.currentTarget) {
-      togglePopup(popup);
-      titleInput.value = '';
-      linkInput.value = '';
+      closePopup(popup);
   }});
 });
+
+
+// Закрытия popup при нажатии на Esc
+function closePopupEscape(evt) {
+  popup.forEach((popup) => {
+  if (evt.key === "Escape") {
+    closePopup(popup);
+  }});
+}
+
+
+// Обработчики открытия, закрытия popup добавления карточки
+profileAddButton.addEventListener('click', () => {
+  resetError ();
+  titleInput.value = '';
+  linkInput.value = '';
+  openPopup(popupAddImage)
+});
+popupCloseAddImage.addEventListener('click', () => {
+  closePopup(popupAddImage)
+});
+
+// Обработчик закрытие popup просмотра Img
+popupCloseViewImage.addEventListener('click', () => closePopup(popupViewImage));
+// Обработчик открытие popup редоктирования профиля
+profileEditButton.addEventListener('click', () => handleOpenProfilePopup());
+// Обработчик закрытие popup редоктирования профиля
+popupProfileCloseButton.addEventListener('click', () => closePopup(popupProfile));
+// Обработчик submit формы редоктирования профиля
+formPopupProfile.addEventListener('submit', submitHandlerform);
