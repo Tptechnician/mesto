@@ -18,7 +18,7 @@ const profileActivity = document.querySelector('.profile__activity');
 const formPopupProfile = document.forms.formPopup;
 const nameInput = formPopupProfile.elements.inputname;
 const jobInput = formPopupProfile.elements.inputactivity;
-const popup = Array.from(document.querySelectorAll('.popup'));
+const popups = Array.from(document.querySelectorAll('.popup'));
 
 //Сброс ошибок в input
 function resetError () {
@@ -33,14 +33,8 @@ function resetError () {
 }
 
 
+
 //Загрузка карточек при загрузке страницы
-function addCards() {
-  const cards = initialCards.map(getCard);
-  elementsCards.prepend(...cards);
-}
-
-addCards();
-
 function getCard(element) {
   const template = elementTemplate.content.cloneNode(true);
   const description = template.querySelector('.element__description');
@@ -60,6 +54,12 @@ function getCard(element) {
   return template;
 }
 
+function addCards() {
+  const cards = initialCards.map(getCard);
+  elementsCards.prepend(...cards);
+}
+
+addCards();
 
 // Открытие Popup
 function openPopup(popup) {
@@ -90,7 +90,7 @@ function openPopupViewImage(element) {
 function submitAddImageForm (evt) {
   evt.preventDefault();
 
-  let data = getCard({
+  const data = getCard({
     name: titleInput.value,
     link: linkInput.value
   })
@@ -139,7 +139,7 @@ function submitHandlerform (evt) {
 
 
 //Закрытия popup при клике по overlay
-popup.forEach((popup) => {
+popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
     if (evt.target === evt.currentTarget) {
       closePopup(popup);
@@ -149,10 +149,10 @@ popup.forEach((popup) => {
 
 // Закрытия popup при нажатии на Esc
 function closePopupEscape(evt) {
-  popup.forEach((popup) => {
   if (evt.key === "Escape") {
-    closePopup(popup);
-  }});
+    const popupOpened = document.querySelector('.popup_opened');
+    closePopup(popupOpened);
+  };
 }
 
 
