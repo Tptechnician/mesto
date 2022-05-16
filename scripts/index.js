@@ -1,5 +1,5 @@
+import {card} from './card.js'
 const elementsCards = document.querySelector('.elements__cards');
-const elementTemplate = document.querySelector('.element-template');
 const profileAddButton = document.querySelector('.profile__add-button');
 const formAddImage = document.forms.formPopupAddImage;
 const titleInput = formAddImage.elements.inputtitle;
@@ -20,6 +20,15 @@ const nameInput = formPopupProfile.elements.inputname;
 const jobInput = formPopupProfile.elements.inputactivity;
 const popups = Array.from(document.querySelectorAll('.popup'));
 
+
+
+initialCards.forEach((element) => {
+const cd = new card(element.name, element.link)
+const cardElement = cd.getCard();
+
+document.querySelector('.elements__cards').append(cardElement);
+});
+
 //Сброс ошибок в input
 function resetError () {
   const errorElement = Array.from(document.querySelectorAll('.popup__form-error'));
@@ -35,7 +44,7 @@ function resetError () {
 
 
 //Загрузка карточек при загрузке страницы
-function getCard(element) {
+/*function getCard(element) {
   const template = elementTemplate.content.cloneNode(true);
   const description = template.querySelector('.element__description');
   const image = template.querySelector('.element__image');
@@ -55,14 +64,14 @@ function getCard(element) {
 }
 
 function addCards() {
-  const cards = initialCards.map(getCard);
+  const cards = initialCards.map(_getCard);
   elementsCards.prepend(...cards);
 }
 
-addCards();
+addCards();*/
 
 // Открытие Popup
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupEscape);
 }
@@ -104,7 +113,7 @@ function submitAddImageForm (evt) {
 
 
 //Удаление карточки
-function removeCard(evt) {
+/*function removeCard(evt) {
   const elementClick = evt.target.closest('.element');
   elementClick.remove();
 }
@@ -113,7 +122,7 @@ function removeCard(evt) {
 // Лайк
 function togglelike(evt) {
   evt.target.classList.toggle('element__like-button_active');
-}
+}*/
 
 
 //Открытие popup редоктирования профиля
