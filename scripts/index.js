@@ -5,8 +5,6 @@ const formAddImage = document.forms.formPopupAddImage;
 const titleInput = formAddImage.elements.inputtitle;
 const linkInput = formAddImage.elements.inputlink;
 const popupViewImage = document.querySelector('.popup_type_viewimage');
-const popupImage = document.querySelector('.popup__image');
-const popupTitleViewImage = document.querySelector('.popup__title_viewimage');
 const popupCloseViewImage = document.querySelector('.popup__close-viewimage');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const popupProfile = document.querySelector('.popup_type_profile');
@@ -21,13 +19,14 @@ const jobInput = formPopupProfile.elements.inputactivity;
 const popups = Array.from(document.querySelectorAll('.popup'));
 
 
-
+//Загрузка карточек при загрузке страницы
 initialCards.forEach((element) => {
-const cd = new card(element.name, element.link)
-const cardElement = cd.getCard();
+  const cd = new card(element.name, element.link)
+  const cardElement = cd.getCard();
 
-document.querySelector('.elements__cards').append(cardElement);
+  document.querySelector('.elements__cards').append(cardElement);
 });
+
 
 //Сброс ошибок в input
 function resetError () {
@@ -41,34 +40,6 @@ function resetError () {
   });
 }
 
-
-
-//Загрузка карточек при загрузке страницы
-/*function getCard(element) {
-  const template = elementTemplate.content.cloneNode(true);
-  const description = template.querySelector('.element__description');
-  const image = template.querySelector('.element__image');
-  const deleteButton = template.querySelector('.element__delete-button');
-  const buttonLike = template.querySelector('.element__like-button');
-    
-  description.textContent = element.name;
-  image.src = element.link;
-  image.alt = element.name;
-
-  
-  deleteButton.addEventListener('click', removeCard);
-  buttonLike.addEventListener('click', togglelike);
-  image.addEventListener('click', () => openPopupViewImage(element));
-  
-  return template;
-}
-
-function addCards() {
-  const cards = initialCards.map(_getCard);
-  elementsCards.prepend(...cards);
-}
-
-addCards();*/
 
 // Открытие Popup
 export function openPopup(popup) {
@@ -84,19 +55,7 @@ function closePopup(popup) {
 }
 
 
-//Просмотр img из карточки
-function openPopupViewImage(element) {
-
-  popupImage.src = element.link;
-  popupImage.alt = element.name; 
-  popupTitleViewImage.textContent = element.name;
-
-  openPopup(popupViewImage);
-}
-
-
 //Добавление новой карточки
-formAddImage.addEventListener('submit', submitAddImageForm);
 function submitAddImageForm (evt) {
   evt.preventDefault();
 
@@ -108,19 +67,6 @@ function submitAddImageForm (evt) {
   titleInput.value = '';
   linkInput.value = '';
 }
-
-
-//Удаление карточки
-/*function removeCard(evt) {
-  const elementClick = evt.target.closest('.element');
-  elementClick.remove();
-}
-
-
-// Лайк
-function togglelike(evt) {
-  evt.target.classList.toggle('element__like-button_active');
-}*/
 
 
 //Открытие popup редоктирования профиля
@@ -182,3 +128,5 @@ profileEditButton.addEventListener('click', () => handleOpenProfilePopup());
 popupProfileCloseButton.addEventListener('click', () => closePopup(popupProfile));
 // Обработчик submit формы редоктирования профиля
 formPopupProfile.addEventListener('submit', submitHandlerform);
+// Обработчик submit формы добавления карточки
+formAddImage.addEventListener('submit', submitAddImageForm);

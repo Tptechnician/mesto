@@ -9,19 +9,23 @@ export class card {
     this._image = image;
   }
 
+  //Приватный метод выбора элемента template
   _getTemplate() {
     const cardElement = document.querySelector('.element-template').content.querySelector('.element').cloneNode(true);
     return cardElement;
   }
 
+  //Приватный метод удаление карточки
   _removeCard() {
     this._elementCard.remove();
   }
 
+  //Приватный метод Like
   _togglelike() {
     this._elementCard.querySelector('.element__like-button').classList.toggle('element__like-button_active');
   }
 
+  //Приватный метод просмотр img из карточки
   _openPopupViewImage() {
     popupImage.src = this._image;
     popupImage.alt = this._description; 
@@ -30,6 +34,7 @@ export class card {
     openPopup(popupViewImage);
   }
 
+  //Публичный метод создания новой карточки
   getCard () {
     this._elementCard = this._getTemplate();
 
