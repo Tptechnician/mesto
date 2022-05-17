@@ -2,13 +2,14 @@ export class FormValidator {
   constructor(config, form){
     this._config = config;
     this._form = form;
+    this._inputList = Array.from(form.querySelectorAll(config.inputSelector));
+    this._submitButton = form.querySelector(config.submitButtonSelector);
   }
 
   //Блокировка кнопки "сохранить"
   _toggleButton(config, form) {
-    const button = form.querySelector(config.submitButtonSelector);
-    button.disabled = !form.checkValidity();
-    button.classList.toggle(config.inactiveButtonClass, !form.checkValidity());
+    this._submitButton.disabled = !form.checkValidity();
+    this._submitButton.classList.toggle(config.inactiveButtonClass, !form.checkValidity());
   }
 
 
@@ -40,10 +41,8 @@ export class FormValidator {
   }; 
 
   //Выбор всех input для валидации
-  _setEventListeners(config, form) {    
-    const inputList = Array.from(form.querySelectorAll(config.inputSelector));
-    
-    inputList.forEach((input) => {
+  _setEventListeners(config, form) {
+    this._inputList.forEach((input) => {
 
       input.addEventListener('input', () => {
         this._isValid(config, form, input)

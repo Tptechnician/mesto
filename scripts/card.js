@@ -1,17 +1,15 @@
-import {openPopup} from './index.js'
-const popupImage = document.querySelector('.popup__image');
-const popupTitleViewImage = document.querySelector('.popup__title_viewimage');
-const popupViewImage = document.querySelector('.popup_type_viewimage');
+import {popupImage, popupTitleViewImage, popupViewImage, openPopup} from './utils.js'
 
 export class card {
-  constructor(description, image) {
+  constructor(description, image, template) {
     this._description = description;
     this._image = image;
+    this._template = template;
   }
 
   //Приватный метод выбора элемента template
   _getTemplate() {
-    const cardElement = document.querySelector('.element-template').content.querySelector('.element').cloneNode(true);
+    const cardElement = this._template.content.querySelector('.element').cloneNode(true);
     return cardElement;
   }
 
@@ -37,10 +35,10 @@ export class card {
   //Публичный метод создания новой карточки
   getCard () {
     this._elementCard = this._getTemplate();
-
+    const image = this._elementCard.querySelector('.element__image');
     this._elementCard.querySelector('.element__description').textContent = this._description;
-    this._elementCard.querySelector('.element__image').src = this._image;
-    this._elementCard.querySelector('.element__image').alt = this._description;
+    image.src = this._image;
+    image.alt = this._description;
 
     this._elementCard.querySelector('.element__delete-button').addEventListener('click', () => {this._removeCard()});
     this._elementCard.querySelector('.element__like-button').addEventListener('click', () => {this._togglelike()});
