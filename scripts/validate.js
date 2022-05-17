@@ -1,3 +1,4 @@
+/*
 //Блокировка кнопки "сохранить"
 function toggleButton(config, form) {
   const button = form.querySelector(config.submitButtonSelector);
@@ -68,3 +69,4 @@ enableValidation ({
   inactiveButtonClass: 'popup__save_no-active',
   inputErrorClass: 'popup__input_type_error'
 });
+*/

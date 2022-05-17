@@ -1,4 +1,14 @@
 import {card} from './card.js'
+import {FormValidator} from'./FormValidator.js'
+
+const config = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save',
+  inactiveButtonClass: 'popup__save_no-active',
+  inputErrorClass: 'popup__input_type_error'
+};
+
 const elementsCards = document.querySelector('.elements__cards');
 const profileAddButton = document.querySelector('.profile__add-button');
 const formAddImage = document.forms.formPopupAddImage;
@@ -17,6 +27,12 @@ const formPopupProfile = document.forms.formPopup;
 const nameInput = formPopupProfile.elements.inputname;
 const jobInput = formPopupProfile.elements.inputactivity;
 const popups = Array.from(document.querySelectorAll('.popup'));
+
+const formAddImageValidator = new FormValidator(config, formAddImage);
+formAddImageValidator.enableValidation();
+
+const formPopupProfileValidator = new FormValidator(config, formPopupProfile);
+formPopupProfileValidator.enableValidation();
 
 
 //Загрузка карточек при загрузке страницы
@@ -114,6 +130,7 @@ profileAddButton.addEventListener('click', () => {
   resetError ();
   titleInput.value = '';
   linkInput.value = '';
+  
   openPopup(popupAddImage)
 });
 popupCloseAddImage.addEventListener('click', () => {
