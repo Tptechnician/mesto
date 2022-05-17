@@ -28,9 +28,12 @@ const nameInput = formPopupProfile.elements.inputname;
 const jobInput = formPopupProfile.elements.inputactivity;
 const popups = Array.from(document.querySelectorAll('.popup'));
 
+
+//Запуск валидации формы добавления карточки
 const formAddImageValidator = new FormValidator(config, formAddImage);
 formAddImageValidator.enableValidation();
 
+//Запуск валидации формы редактирования профиля
 const formPopupProfileValidator = new FormValidator(config, formPopupProfile);
 formPopupProfileValidator.enableValidation();
 
