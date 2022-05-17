@@ -55,7 +55,7 @@ function resetError () {
   image.src = element.link;
   image.alt = element.name;
 
-  formAddImage.addEventListener('submit', submitAddImageForm);
+  
   deleteButton.addEventListener('click', removeCard);
   buttonLike.addEventListener('click', togglelike);
   image.addEventListener('click', () => openPopupViewImage(element));
@@ -96,13 +96,11 @@ function openPopupViewImage(element) {
 
 
 //Добавление новой карточки
+formAddImage.addEventListener('submit', submitAddImageForm);
 function submitAddImageForm (evt) {
   evt.preventDefault();
 
-  const data = getCard({
-    name: titleInput.value,
-    link: linkInput.value
-  })
+  const data = new card(titleInput.value, linkInput.value).getCard();
 
   elementsCards.prepend(data);
   closePopup(popupAddImage);

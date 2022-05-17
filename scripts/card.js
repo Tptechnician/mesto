@@ -30,7 +30,7 @@ export class card {
     openPopup(popupViewImage);
   }
 
-  getCard = () => {
+  getCard () {
     this._elementCard = this._getTemplate();
 
     this._elementCard.querySelector('.element__description').textContent = this._description;
