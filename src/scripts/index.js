@@ -1,7 +1,13 @@
 import {card} from './card.js'
+import {Popup} from './Popup.js'
 import {FormValidator} from'./FormValidator.js'
-import {popupViewImage, openPopup, closePopup} from './utils.js'
+//import {popupViewImage, openPopup, closePopup} from './utils.js'
 import {Section} from'./Section.js'
+/*import {
+  popupImage,
+  popupTitleViewImage,
+  popupViewImage
+} from './constants';*/
 
 const config = {
   formSelector: '.popup__form',
