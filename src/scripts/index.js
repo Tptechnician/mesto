@@ -1,6 +1,7 @@
 import {card} from './card.js'
 import {FormValidator} from'./FormValidator.js'
 import {popupViewImage, openPopup, closePopup} from './utils.js'
+import {Section} from'./Section.js'
 
 const config = {
   formSelector: '.popup__form',
@@ -30,7 +31,6 @@ const jobInput = formPopupProfile.elements.inputactivity;
 const popups = Array.from(document.querySelectorAll('.popup'));
 const submitButton = formAddImage.querySelector('.popup__save');
 
-
 //Запуск валидации формы добавления карточки
 const formAddImageValidator = new FormValidator(config, formAddImage);
 formAddImageValidator.enableValidation();
@@ -39,15 +39,22 @@ formAddImageValidator.enableValidation();
 const formPopupProfileValidator = new FormValidator(config, formPopupProfile);
 formPopupProfileValidator.enableValidation();
 
+//Функция создания карточки
 function newCard (name, link, template){
   const newCard = new card(name, link, template).getCard();
   return newCard;
 }
 
 //Загрузка карточек при загрузке страницы
-initialCards.forEach((element) => {
-  elementsCards.append(newCard(element.name, element.link, template));
-});
+const cardObject = new Section({items: initialCards, 
+  renderer: (items) => {
+    const cardElement = newCard(items.name, items.link, template);
+
+    cardObject.addItem(cardElement);
+  }
+}, elementsCards);
+
+cardObject.render();
 
 
 //Сброс ошибок в input
@@ -68,6 +75,7 @@ function submitAddImageForm (evt) {
   evt.preventDefault();
 
   elementsCards.prepend(newCard(titleInput.value, linkInput.value, template));
+  
   closePopup(popupAddImage);
 
   titleInput.value = '';
