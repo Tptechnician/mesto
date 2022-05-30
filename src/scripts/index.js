@@ -1,7 +1,7 @@
 import {card} from './card.js'
 import {Popup} from './Popup.js'
 import {FormValidator} from'./FormValidator.js'
-//import {popupViewImage, openPopup, closePopup} from './utils.js'
+import {popupViewImage, openPopup, closePopup} from './utils.js'
 import {Section} from'./Section.js'
 /*import {
   popupImage,
@@ -77,11 +77,21 @@ function resetError () {
 
 
 //Добавление новой карточки
-function submitAddImageForm (evt) {
+function submitAddImageForm (evt, ) {
   evt.preventDefault();
 
-  elementsCards.prepend(newCard(titleInput.value, linkInput.value, template));
+  //elementsCards.prepend(newCard(titleInput.value, linkInput.value, template));
   
+  const cardObject = new Section({items: [{name: titleInput.value, link: linkInput.value}], 
+    renderer: (items) => {
+      const cardElement = newCard(titleInput.value, linkInput.value, template);
+  
+      cardObject.addItemPrepend(cardElement);
+    }
+  }, elementsCards);
+  
+  cardObject.render();
+
   closePopup(popupAddImage);
 
   titleInput.value = '';
@@ -115,12 +125,12 @@ function submitHandlerform (evt) {
 
 
 //Закрытия popup при клике по overlay
-popups.forEach((popup) => {
+/*popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
     if (evt.target === evt.currentTarget) {
       closePopup(popup);
   }});
-});
+});*/
 
 
 // Обработчики открытия, закрытия popup добавления карточки
@@ -131,6 +141,7 @@ profileAddButton.addEventListener('click', () => {
   
   openPopup(popupAddImage)
 });
+
 popupCloseAddImage.addEventListener('click', () => {
   closePopup(popupAddImage)
 });
