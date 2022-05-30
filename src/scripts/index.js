@@ -1,7 +1,7 @@
 import {card} from './card.js'
 import {Popup} from './Popup.js'
 import {FormValidator} from'./FormValidator.js'
-import {popupViewImage, openPopup, closePopup} from './utils.js'
+//import {popupViewImage, openPopup, closePopup} from './utils.js'
 import {Section} from'./Section.js'
 /*import {
   popupImage,
@@ -77,13 +77,11 @@ function resetError () {
 
 
 //Добавление новой карточки
-function submitAddImageForm (evt, ) {
+function submitAddImageForm (evt,) {
   evt.preventDefault();
-
-  //elementsCards.prepend(newCard(titleInput.value, linkInput.value, template));
   
   const cardObject = new Section({items: [{name: titleInput.value, link: linkInput.value}], 
-    renderer: (items) => {
+    renderer: () => {
       const cardElement = newCard(titleInput.value, linkInput.value, template);
   
       cardObject.addItemPrepend(cardElement);
@@ -92,7 +90,8 @@ function submitAddImageForm (evt, ) {
   
   cardObject.render();
 
-  closePopup(popupAddImage);
+  const popup = new Popup(popupAddImage);
+  popup.close();
 
   titleInput.value = '';
   linkInput.value = '';
@@ -101,6 +100,15 @@ function submitAddImageForm (evt, ) {
   submitButton.classList.add('popup__save_no-active');
 }
 
+// Обработчики открытия, закрытия popup добавления карточки
+profileAddButton.addEventListener('click', () => {
+  resetError ();
+  titleInput.value = '';
+  linkInput.value = '';
+  
+  const popup = new Popup(popupAddImage);
+  popup.open();
+});
 
 //Открытие popup редоктирования профиля
 function handleOpenProfilePopup() {
@@ -133,18 +141,7 @@ function submitHandlerform (evt) {
 });*/
 
 
-// Обработчики открытия, закрытия popup добавления карточки
-profileAddButton.addEventListener('click', () => {
-  resetError ();
-  titleInput.value = '';
-  linkInput.value = '';
-  
-  openPopup(popupAddImage)
-});
 
-popupCloseAddImage.addEventListener('click', () => {
-  closePopup(popupAddImage)
-});
 
 // Обработчик закрытие popup просмотра Img
 popupCloseViewImage.addEventListener('click', () => closePopup(popupViewImage));

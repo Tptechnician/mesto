@@ -14,7 +14,7 @@ export class Popup {
 
   //Приватный метод закрытия popup при клике по overlay
   _handleClickClose(evt) {
-      if (evt.target === evt.currentTarget) {
+      if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__close')) {
         this.close();
     }};
 
