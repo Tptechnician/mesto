@@ -1,13 +1,15 @@
+import {initialCards} from './cards.js'
 import {card} from './card.js'
 import {Popup} from './Popup.js'
 import {FormValidator} from'./FormValidator.js'
-//import {popupViewImage, openPopup, closePopup} from './utils.js'
 import {Section} from'./Section.js'
-/*import {
+import {PopupWithImage} from'./PopupWithImage.js'
+import {
   popupImage,
   popupTitleViewImage,
-  popupViewImage
-} from './constants';*/
+  popupViewImage,
+  template
+} from './constants.js';
 
 const config = {
   formSelector: '.popup__form',
@@ -17,7 +19,7 @@ const config = {
   inputErrorClass: 'popup__input_type_error'
 };
 
-const template = document.querySelector('.element-template');
+
 const elementsCards = document.querySelector('.elements__cards');
 const profileAddButton = document.querySelector('.profile__add-button');
 const formAddImage = document.forms.formPopupAddImage;
@@ -28,14 +30,13 @@ const profileEditButton = document.querySelector('.profile__edit-button');
 const popupProfile = document.querySelector('.popup_type_profile');
 const popupProfileCloseButton = popupProfile.querySelector('.popup__close');
 const popupAddImage = document.querySelector('.popup_type_addimage');
-const popupCloseAddImage = document.querySelector('.popup__close-addimage');
 const profileName = document.querySelector('.profile__name');
 const profileActivity = document.querySelector('.profile__activity');
 const formPopupProfile = document.forms.formPopup;
 const nameInput = formPopupProfile.elements.inputname;
 const jobInput = formPopupProfile.elements.inputactivity;
-const popups = Array.from(document.querySelectorAll('.popup'));
 const submitButton = formAddImage.querySelector('.popup__save');
+
 
 //Запуск валидации формы добавления карточки
 const formAddImageValidator = new FormValidator(config, formAddImage);
@@ -46,15 +47,21 @@ const formPopupProfileValidator = new FormValidator(config, formPopupProfile);
 formPopupProfileValidator.enableValidation();
 
 //Функция создания карточки
-function newCard (name, link, template){
-  const newCard = new card(name, link, template).getCard();
+function newCard (name, link, template, handleCardClick){
+  const newCard = new card(name, link, template, handleCardClick).getCard();
+
   return newCard;
 }
 
 //Загрузка карточек при загрузке страницы
+const instancePopupImage = new PopupWithImage(popupViewImage);
+
 const cardObject = new Section({items: initialCards, 
   renderer: (items) => {
-    const cardElement = newCard(items.name, items.link, template);
+    const cardElement = newCard(items.name, items.link, template, 
+      ({name, link}) => {
+        instancePopupImage.open({name, link});
+      });
 
     cardObject.addItem(cardElement);
   }
@@ -82,7 +89,9 @@ function submitAddImageForm (evt,) {
   
   const cardObject = new Section({items: [{name: titleInput.value, link: linkInput.value}], 
     renderer: () => {
-      const cardElement = newCard(titleInput.value, linkInput.value, template);
+      const cardElement = newCard(titleInput.value, linkInput.value, template, ({name, link}) => {
+        instancePopupImage.open({name, link});
+      });
   
       cardObject.addItemPrepend(cardElement);
     }
@@ -130,18 +139,6 @@ function submitHandlerform (evt) {
 
     closePopup(popupProfile);
 }
-
-
-//Закрытия popup при клике по overlay
-/*popups.forEach((popup) => {
-  popup.addEventListener('click', (evt) => {
-    if (evt.target === evt.currentTarget) {
-      closePopup(popup);
-  }});
-});*/
-
-
-
 
 // Обработчик закрытие popup просмотра Img
 popupCloseViewImage.addEventListener('click', () => closePopup(popupViewImage));

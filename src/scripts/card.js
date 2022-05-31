@@ -1,10 +1,11 @@
-import {popupImage, popupTitleViewImage, popupViewImage, openPopup} from './utils.js'
+
 
 export class card {
-  constructor(description, image, template) {
+  constructor(description, image, template, handleCardClick) {
     this._description = description;
     this._image = image;
     this._template = template;
+    this._handleCardClick = handleCardClick;
   }
 
   //Приватный метод выбора элемента template
@@ -24,13 +25,13 @@ export class card {
   }
 
   //Приватный метод просмотр img из карточки
-  _openPopupViewImage() {
+  /*_openPopupViewImage() {
     popupImage.src = this._image;
     popupImage.alt = this._description; 
     popupTitleViewImage.textContent = this._description;
     
     openPopup(popupViewImage);
-  }
+  }*/
 
   //Публичный метод создания новой карточки
   getCard () {
@@ -42,7 +43,7 @@ export class card {
 
     this._elementCard.querySelector('.element__delete-button').addEventListener('click', () => {this._removeCard()});
     this._elementCard.querySelector('.element__like-button').addEventListener('click', () => {this._togglelike()});
-    this._elementCard.querySelector('.element__image').addEventListener('click', () => {this._openPopupViewImage()});
+    this._elementCard.querySelector('.element__image').addEventListener('click', () => {this._handleCardClick({name: image.alt, link: image.src})});
 
     return this._elementCard;
   }
