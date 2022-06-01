@@ -4,6 +4,7 @@ import {Popup} from './Popup.js'
 import {FormValidator} from'./FormValidator.js'
 import {Section} from'./Section.js'
 import {PopupWithImage} from'./PopupWithImage.js'
+import {PopupWithForm} from'./PopupWithForm.js'
 import {
   popupImage,
   popupTitleViewImage,
@@ -83,41 +84,35 @@ function resetError () {
 }
 
 
+
 //Добавление новой карточки
-function submitAddImageForm (evt,) {
-  evt.preventDefault();
-  
-  const cardObject = new Section({items: [{name: titleInput.value, link: linkInput.value}], 
-    renderer: () => {
-      const cardElement = newCard(titleInput.value, linkInput.value, template, ({name, link}) => {
-        instancePopupImage.open({name, link});
-      });
-  
-      cardObject.addItemPrepend(cardElement);
-    }
+const formAddImg = new PopupWithForm(popupAddImage, 
+  (data) => {
+    
+    const cardObject = new Section({items: [{name: data.inputtitle, link: data.inputlink}], 
+      renderer: (items) => {
+        const cardElement = newCard(items.name, items.link, template, 
+          ({name, link}) => {
+            instancePopupImage.open({name, link});
+          });
+    
+        cardObject.addItemPrepend(cardElement);
+      }
   }, elementsCards);
-  
-  cardObject.render();
+    
+    cardObject.render();
+    formAddImg.close();
+    submitButton.disabled = true;
+    submitButton.classList.add('popup__save_no-active');
+  });
 
-  const popup = new Popup(popupAddImage);
-  popup.close();
-
-  titleInput.value = '';
-  linkInput.value = '';
-
-  submitButton.disabled = true;
-  submitButton.classList.add('popup__save_no-active');
-}
-
-// Обработчики открытия, закрытия popup добавления карточки
+// Обработчики открытия, popup добавления карточки
 profileAddButton.addEventListener('click', () => {
-  resetError ();
-  titleInput.value = '';
-  linkInput.value = '';
-  
+  formAddImg.setEventListeners();
   const popup = new Popup(popupAddImage);
   popup.open();
 });
+
 
 //Открытие popup редоктирования профиля
 function handleOpenProfilePopup() {
@@ -148,5 +143,4 @@ profileEditButton.addEventListener('click', () => handleOpenProfilePopup());
 popupProfileCloseButton.addEventListener('click', () => closePopup(popupProfile));
 // Обработчик submit формы редоктирования профиля
 formPopupProfile.addEventListener('submit', submitHandlerform);
-// Обработчик submit формы добавления карточки
-formAddImage.addEventListener('submit', submitAddImageForm);
+
