@@ -84,23 +84,21 @@ function resetError () {
 }
 
 
-
 //Добавление новой карточки
 const formAddImg = new PopupWithForm(popupAddImage, 
-  (data) => {
-    
-    const cardObject = new Section({items: [{name: data.inputtitle, link: data.inputlink}], 
+  (data) => {const addCardObject = new Section({items: [{name: data.inputtitle, link: data.inputlink}], 
       renderer: (items) => {
-        const cardElement = newCard(items.name, items.link, template, 
-          ({name, link}) => {
-            instancePopupImage.open({name, link});
-          });
-    
-        cardObject.addItemPrepend(cardElement);
+       const cardElement = newCard(data.inputtitle, data.inputlink, template,
+        ({name, link}) => {
+          instancePopupImage.open({name, link});
+        });
+          
+          addCardObject.addItemPrepend(cardElement);
       }
   }, elementsCards);
-    
-    cardObject.render();
+addCardObject.render();
+      
+      console.log(card);
     formAddImg.close();
     submitButton.disabled = true;
     submitButton.classList.add('popup__save_no-active');
@@ -108,11 +106,11 @@ const formAddImg = new PopupWithForm(popupAddImage,
 
 // Обработчики открытия, popup добавления карточки
 profileAddButton.addEventListener('click', () => {
-  formAddImg.setEventListeners();
+  
   const popup = new Popup(popupAddImage);
   popup.open();
 });
-
+formAddImg.setEventListeners();
 
 //Открытие popup редоктирования профиля
 function handleOpenProfilePopup() {
