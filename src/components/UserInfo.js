@@ -2,7 +2,7 @@ export class UserInfo {
   constructor({name, activity}){
     this._profileName = name;
     this._profileActivity = activity;
-  }
+  };
 
   getUserInfo() {
     const data = {
@@ -10,11 +10,10 @@ export class UserInfo {
       activity: this._profileActivity.textContent
     };
     return data;
-  }
+  };
 
   setUserInfo(data) {
     this._profileName.textContent = data.inputname;
     this._profileActivity.textContent = data.inputactivity;
-  }
-
-}
+  };
+};

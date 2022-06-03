@@ -4,13 +4,13 @@ export class FormValidator {
     this._form = form;
     this._inputList = Array.from(form.querySelectorAll(config.inputSelector));
     this._submitButton = form.querySelector(config.submitButtonSelector);
-  }
+  };
 
   //Блокировка кнопки "сохранить"
   _toggleButton(config, form) {
     this._submitButton.disabled = !form.checkValidity();
     this._submitButton.classList.toggle(config.inactiveButtonClass, !form.checkValidity());
-  }
+  };
 
 
   //Добавление сообщения об ошибке
@@ -60,13 +60,6 @@ export class FormValidator {
     this._setEventListeners(this._config, this._form);
     this._toggleButton(this._config, this._form);
   
-  }
+  };
 }
 
-/*enableValidation ({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save',
-  inactiveButtonClass: 'popup__save_no-active',
-  inputErrorClass: 'popup__input_type_error'
-});*/

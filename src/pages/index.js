@@ -1,3 +1,4 @@
+import './index.css';
 import {initialCards} from '../scripts/cards.js'
 import {card} from '../components/card.js'
 import {Popup} from '../components/Popup.js'
@@ -69,7 +70,7 @@ function resetError () {
   errorInput.forEach((errorInput) => {
     errorInput.classList.remove('popup__input_type_error');
   });
-}
+};
 
 
 //Добавление новой карточки
@@ -112,7 +113,7 @@ const formProfile = new PopupWithForm(popupProfile,
     submitButton.disabled = true;
     submitButton.classList.add('popup__save_no-active');
   }
-  )
+  );
   formProfile.setEventListeners();
 
 

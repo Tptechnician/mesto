@@ -24,15 +24,6 @@ export class card {
     this._elementCard.querySelector('.element__like-button').classList.toggle('element__like-button_active');
   }
 
-  //Приватный метод просмотр img из карточки
-  /*_openPopupViewImage() {
-    popupImage.src = this._image;
-    popupImage.alt = this._description; 
-    popupTitleViewImage.textContent = this._description;
-    
-    openPopup(popupViewImage);
-  }*/
-
   //Публичный метод создания новой карточки
   getCard () {
     this._elementCard = this._getTemplate();
