@@ -1,6 +1,6 @@
 import './index.css';
 import {initialCards} from '../scripts/cards.js'
-import {card} from '../components/card.js'
+import {Card} from '../components/card.js'
 import {Popup} from '../components/Popup.js'
 import {FormValidator} from'../components/FormValidator.js'
 import {Section} from'../components/Section.js'
@@ -38,7 +38,7 @@ formPopupProfileValidator.enableValidation();
 
 //Функция создания карточки
 function newCard (name, link, template, handleCardClick){
-  const newCard = new card(name, link, template, handleCardClick).getCard();
+  const newCard = new Card(name, link, template, handleCardClick).getCard();
 
   return newCard;
 }
