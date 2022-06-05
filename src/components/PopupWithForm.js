@@ -16,15 +16,11 @@ export class PopupWithForm extends Popup{
     
     return this._data;
   };
-
-  /*_submitEvtHandler() {
-    this._submitbtn(this._getInputValues());
-  }*/
-
   
-  
-  setEventListeners() {
-    super.setEventListeners;
+  //Не совсем понял коментария к этому обработчику так-как этот метод 
+  //вызывается единожды в глобальной области в файле index.js.
+  setEventListener() {
+    super.setEventListeners();
     this._form.addEventListener('submit', (e) =>{
       e.preventDefault();
       this._submit(this._getInputValues());

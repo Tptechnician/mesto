@@ -4,6 +4,7 @@ export class FormValidator {
     this._form = form;
     this._inputList = Array.from(form.querySelectorAll(config.inputSelector));
     this._submitButton = form.querySelector(config.submitButtonSelector);
+    this._errorElements = Array.from(form.querySelectorAll('.popup__form-error'));
   };
 
   //Блокировка кнопки "сохранить"
@@ -48,6 +49,18 @@ export class FormValidator {
         this._isValid(config, form, input)
       });
     });
+  };
+
+  //Сброс ошибок в input
+  resetValidation(){
+    this._errorElements.forEach((errorElement) => {
+      errorElement.textContent = '';
+    });
+    this._inputList.forEach((errorInput) => {
+      errorInput.classList.remove('popup__input_type_error');
+    });
+    this._submitButton.disabled = true;
+    this._submitButton.classList.add('popup__save_no-active');
   };
 
   //Включение валидации

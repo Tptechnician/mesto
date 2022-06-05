@@ -1,7 +1,6 @@
 import './index.css';
 import {initialCards} from '../scripts/cards.js'
 import {Card} from '../components/card.js'
-import {Popup} from '../components/Popup.js'
 import {FormValidator} from'../components/FormValidator.js'
 import {Section} from'../components/Section.js'
 import {PopupWithImage} from'../components/PopupWithImage.js'
@@ -13,39 +12,52 @@ import {
   template,
   elementsCards,
   profileAddButton,
-  formAddImage,
   profileEditButton,
   popupProfile,
   popupAddImage,
   profileName,
   profileActivity,
-  formPopupProfile,
   nameInput,
   jobInput,
-  submitButton,
   config
 } from '../scripts/constants.js';
+
+
+
+//Экземпляр класса PopupWithImage
 const instancePopupImage = new PopupWithImage(popupViewImage);
 
+//Экземпляр класса UserInfo
+const userInfo = new UserInfo ({name: profileName, activity: profileActivity});
 
-//Запуск валидации формы добавления карточки
-const formAddImageValidator = new FormValidator(config, formAddImage);
-formAddImageValidator.enableValidation();
 
-//Запуск валидации формы редактирования профиля
-const formPopupProfileValidator = new FormValidator(config, formPopupProfile);
-formPopupProfileValidator.enableValidation();
+//Запуск валидации
+const formValidators = {};
 
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(config, formElement)
+
+    const formName = formElement.getAttribute('name')
+
+    formValidators[formName] = validator;
+   validator.enableValidation();
+  });
+};
+enableValidation(config);
 
 
 //Функция создания карточки
-function newCard (name, link, template, handleCardClick){
+function newCard (name, link, template){
   const newCard = new Card(name, link, template, ({name, link}) => {
     instancePopupImage.open({name, link});
   }).getCard();
 
   return newCard;
 }
+
 
 //Загрузка карточек при загрузке страницы
 const cardObject = new Section({item: initialCards, 
@@ -55,21 +67,7 @@ const cardObject = new Section({item: initialCards,
     cardObject.addItem(cardElement);
   }
 }, elementsCards);
-
 cardObject.render();
-
-
-//Сброс ошибок в input
-function resetError () {
-  const errorElement = Array.from(document.querySelectorAll('.popup__form-error'));
-  const errorInput = Array.from(document.querySelectorAll('.popup__input'));
-  errorElement.forEach((errorElement) => {
-    errorElement.textContent = '';
-  });
-  errorInput.forEach((errorInput) => {
-    errorInput.classList.remove('popup__input_type_error');
-  });
-};
 
 
 //Добавление новой карточки
@@ -79,44 +77,35 @@ const formAddImg = new PopupWithForm(popupAddImage,
     cardObject.addItemPrepend(card);
     
     formAddImg.close();
-    submitButton.disabled = true;
-    submitButton.classList.add('popup__save_no-active');
   });
-
-// Обработчики открытия, popup добавления карточки
-profileAddButton.addEventListener('click', () => {
-  resetError ();
-  
-  //const popup = new Popup(popupAddImage);
-  formAddImg.open();
-});
-formAddImg.setEventListeners();
+formAddImg.setEventListener();
 
 
-//Экземпляр класса UserInfo
-const userInfo = new UserInfo ({name: profileName, activity: profileActivity});
-
-
+//Редоктирование профиля
 const formProfile = new PopupWithForm(popupProfile,
     (data) => {
       userInfo.setUserInfo(data);
     
     formProfile.close();
-    submitButton.disabled = true;
-    submitButton.classList.add('popup__save_no-active');
-  }
-  );
-  formProfile.setEventListeners();
+  });
+  formProfile.setEventListener();
+
+
+// Обработчик открытия, popup добавления карточки
+profileAddButton.addEventListener('click', () => {
+  
+  formValidators['formPopupAddImage'].resetValidation();
+  formAddImg.open();
+});
 
 
 // Обработчик открытие popup редоктирования профиля
 profileEditButton.addEventListener('click', () => {
-  resetError ();
   const userInfoList = userInfo.getUserInfo();
 
   nameInput.value = userInfoList.name;
   jobInput.value = userInfoList.activity;
 
-  const popup = new Popup(popupProfile);
-  popup.open();
+  formValidators['formPopup'].resetValidation();
+  formProfile.open();
 });
