@@ -25,7 +25,7 @@ import {
   submitButton,
   config
 } from '../scripts/constants.js';
-
+const instancePopupImage = new PopupWithImage(popupViewImage);
 
 
 //Запуск валидации формы добавления карточки
@@ -36,22 +36,21 @@ formAddImageValidator.enableValidation();
 const formPopupProfileValidator = new FormValidator(config, formPopupProfile);
 formPopupProfileValidator.enableValidation();
 
+
+
 //Функция создания карточки
 function newCard (name, link, template, handleCardClick){
-  const newCard = new Card(name, link, template, handleCardClick).getCard();
+  const newCard = new Card(name, link, template, ({name, link}) => {
+    instancePopupImage.open({name, link});
+  }).getCard();
 
   return newCard;
 }
 
 //Загрузка карточек при загрузке страницы
-const instancePopupImage = new PopupWithImage(popupViewImage);
-
 const cardObject = new Section({item: initialCards, 
   renderer: (item) => {
-    const cardElement = newCard(item.name, item.link, template, 
-      ({name, link}) => {
-        instancePopupImage.open({name, link});
-      });
+    const cardElement = newCard(item.name, item.link, template);
 
     cardObject.addItem(cardElement);
   }
@@ -75,17 +74,9 @@ function resetError () {
 
 //Добавление новой карточки
 const formAddImg = new PopupWithForm(popupAddImage, 
-  (data) => {const addCardObject = new Section({item: [{name: data.inputtitle, link: data.inputlink}], 
-      renderer: () => {
-       const cardElement = newCard(data.inputtitle, data.inputlink, template,
-        ({name, link}) => {
-          instancePopupImage.open({name, link});
-        });
-          
-          addCardObject.addItemPrepend(cardElement);
-      }
-  }, elementsCards);
-    addCardObject.render();
+  (data) => {
+    const card = newCard(data.inputtitle, data.inputlink, template);
+    cardObject.addItemPrepend(card);
     
     formAddImg.close();
     submitButton.disabled = true;
@@ -95,8 +86,9 @@ const formAddImg = new PopupWithForm(popupAddImage,
 // Обработчики открытия, popup добавления карточки
 profileAddButton.addEventListener('click', () => {
   resetError ();
-  const popup = new Popup(popupAddImage);
-  popup.open();
+  
+  //const popup = new Popup(popupAddImage);
+  formAddImg.open();
 });
 formAddImg.setEventListeners();
 
