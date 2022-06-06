@@ -71,24 +71,24 @@ cardObject.render();
 
 
 //Добавление новой карточки
-const formAddImg = new PopupWithForm(popupAddImage, 
-  (data) => {
+const formAddImg = new PopupWithForm({popupSelector: popupAddImage, 
+  submit: (data) => {
     const card = newCard(data.inputtitle, data.inputlink, template);
     cardObject.addItemPrepend(card);
     
     formAddImg.close();
-  });
-formAddImg.setEventListener();
+  }});
+//formAddImg.setEventListeners();
 
 
 //Редоктирование профиля
-const formProfile = new PopupWithForm(popupProfile,
-    (data) => {
+const formProfile = new PopupWithForm({popupSelector: popupProfile,
+  submit: (data) => {
       userInfo.setUserInfo(data);
     
     formProfile.close();
-  });
-  formProfile.setEventListener();
+  }});
+  //formProfile.setEventListeners();
 
 
 // Обработчик открытия, popup добавления карточки
