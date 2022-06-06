@@ -78,7 +78,6 @@ const formAddImg = new PopupWithForm({popupSelector: popupAddImage,
     
     formAddImg.close();
   }});
-//formAddImg.setEventListeners();
 
 
 //Редоктирование профиля
@@ -88,7 +87,6 @@ const formProfile = new PopupWithForm({popupSelector: popupProfile,
     
     formProfile.close();
   }});
-  //formProfile.setEventListeners();
 
 
 // Обработчик открытия, popup добавления карточки
