@@ -19,6 +19,9 @@ import {
   profileActivity,
   nameInput,
   jobInput,
+  avatarButton,
+  popupAvatar,
+  profileAvatarImg,
   config
 } from '../scripts/constants.js';
 
@@ -83,10 +86,18 @@ const formAddImg = new PopupWithForm({popupSelector: popupAddImage,
 //Редоктирование профиля
 const formProfile = new PopupWithForm({popupSelector: popupProfile,
   submit: (data) => {
-      userInfo.setUserInfo(data);
+    userInfo.setUserInfo(data);
     
     formProfile.close();
   }});
+
+// Редоктирование картинки Аватара
+  const formAvatar = new PopupWithForm({popupSelector: popupAvatar,
+    submit: (data) => {
+      console.log(data);
+      profileAvatarImg.src = data.inputlink;
+      formAvatar.close();
+    }});
 
 
 // Обработчик открытия, popup добавления карточки
@@ -106,4 +117,11 @@ profileEditButton.addEventListener('click', () => {
 
   formValidators['formPopup'].resetValidation();
   formProfile.open();
+});
+
+//Обработчик открытие popup редоктирования Аватара
+avatarButton.addEventListener('click', () => {
+
+  formValidators['formPopupAvatar'].resetValidation();
+  formAvatar.open();
 });
