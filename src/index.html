@@ -105,7 +105,7 @@
         <div class="popup popup_type_avatar">
             <div class="popup__content">
                 <button class="popup__close popup__close-avatar" type="button"></button>
-                <h3 class="popup__title">Новое место</h3>
+                <h3 class="popup__title">Обновить аватар</h3>
                 <form class="popup__form" name="formPopupAvatar" novalidate>
                     <input 
                         class="popup__input" 
@@ -117,6 +117,16 @@
                     >
                     <span class="popup__form-error" id="input-link-error"></span>
                     <button class="popup__save" type="submit">Сохранить</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="popup popup_type_delete">
+            <div class="popup__content">
+                <button class="popup__close popup__close-avatar" type="button"></button>
+                <h3 class="popup__title">Вы уверены?</h3>
+                <form class="popup__form" name="formPopupDelete">
+                <button class="popup__save" type="submit">Да</button>
                 </form>
             </div>
         </div>

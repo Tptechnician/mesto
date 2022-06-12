@@ -14,7 +14,8 @@ export const jobInput = formPopupProfile.elements.inputactivity;
 export const submitButton = formAddImage.querySelector('.popup__save');
 export const avatarButton = document.querySelector('.profile__avatar-button');
 export const popupAvatar = document.querySelector('.popup_type_avatar');
-export const profileAvatarImg = document.querySelector('.profile__avatar'); 
+export const profileAvatarImg = document.querySelector('.profile__avatar');
+export const popupDelete = document.querySelector('.popup_type_delete');
 export const config = {
     formSelector: '.popup__form',
     inputSelector: '.popup__input',
