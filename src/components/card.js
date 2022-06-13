@@ -1,11 +1,13 @@
 
 
 export class Card {
-  constructor(description, image, template, handleCardClick) {
-    this._description = description;
-    this._image = image;
+  constructor(data, template, handleCardClick) {
+    this._likeCount = data.likes.length;
+    this._description = data.name;
+    this._image = data.link;
     this._template = template;
     this._handleCardClick = handleCardClick;
+    console.log(this._likeCount);
   }
 
   //Приватный метод выбора элемента template
@@ -34,10 +36,15 @@ export class Card {
     this._elementCard.querySelector('.element__image').addEventListener('click', () => {this._handleCardClick({name: image.alt, link: image.src})});
   }
 
+  setLike(){
+
+  }
+
   //Публичный метод создания новой карточки
   getCard () {
-    this._elementCard = this._getTemplate();    
+    this._elementCard = this._getTemplate();
     this._elementCard.querySelector('.element__description').textContent = this._description;
+    this._elementCard.querySelector('.element__like-count').textContent = this._likeCount;
     this._setEventListeners();
 
     return this._elementCard;

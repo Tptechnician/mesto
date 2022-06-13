@@ -25,6 +25,7 @@ import {
   profileAvatarImg,
   config
 } from '../scripts/constants.js';
+import { data } from 'autoprefixer';
 
 //Экземпляр класса Api
 const api = new Api({
@@ -37,7 +38,7 @@ const api = new Api({
 
 //Экземпляр класса Section
 const cardObject = new Section((item) => {
-    const cardElement = newCard(item.name, item.link, template);
+    const cardElement = newCard(item, template);
 
     cardObject.addItem(cardElement);
   }, elementsCards);
@@ -68,8 +69,8 @@ enableValidation(config);
 
 
 //Функция создания карточки
-function newCard (name, link, template){
-  const newCard = new Card(name, link, template, ({name, link}) => {
+function newCard (data, template){
+  const newCard = new Card(data, template, ({name, link}) => {
     instancePopupImage.open({name, link});
   }).getCard();
 
@@ -89,12 +90,11 @@ api.getCard()
 
 
 //Добавление новой карточки
-
 const formAddImg = new PopupWithForm({popupSelector: popupAddImage, 
   submit: (data) => {
     api.addCard(data)
       .then((res) =>{
-        const card = newCard(res.name, res.link, template);
+        const card = newCard(res, template);
         cardObject.addItemPrepend(card);
       })
       .catch((err) => {
