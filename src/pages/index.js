@@ -78,10 +78,8 @@ function newCard (name, link, template){
 
 
 //Загрузка карточек при загрузке страницы
-
-
 api.getCard()
-  .then((item) =>{    
+  .then((item) =>{
     cardObject.render(item);
   })
   .catch((err) => {
@@ -91,10 +89,17 @@ api.getCard()
 
 
 //Добавление новой карточки
+
 const formAddImg = new PopupWithForm({popupSelector: popupAddImage, 
   submit: (data) => {
-    const card = newCard(data.inputtitle, data.inputlink, template);
-    cardObject.addItemPrepend(card);
+    api.addCard(data)
+      .then((res) =>{
+        const card = newCard(res.name, res.link, template);
+        cardObject.addItemPrepend(card);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     
     formAddImg.close();
   }});
@@ -111,7 +116,6 @@ const formProfile = new PopupWithForm({popupSelector: popupProfile,
 // Редоктирование картинки Аватара
   const formAvatar = new PopupWithForm({popupSelector: popupAvatar,
     submit: (data) => {
-      console.log(data);
       profileAvatarImg.src = data.inputlink;
       formAvatar.close();
     }});
