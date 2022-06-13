@@ -1,11 +1,12 @@
 import './index.css';
-import {initialCards} from '../scripts/cards.js'
+//import {initialCards} from '../scripts/cards.js'
 import {Card} from '../components/card.js'
 import {FormValidator} from'../components/FormValidator.js'
 import {Section} from'../components/Section.js'
 import {PopupWithImage} from'../components/PopupWithImage.js'
 import {PopupWithForm} from'../components/PopupWithForm.js'
 import {UserInfo} from '../components/UserInfo.js'
+import {Api} from '../components/api.js'
 
 import {
   popupViewImage,
@@ -25,7 +26,21 @@ import {
   config
 } from '../scripts/constants.js';
 
+//Экземпляр класса Api
+const api = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-43',
+  headers: {
+    authorization: '8bdc11e5-0409-4a66-a2e9-cb41b1679eea',
+    'Content-Type': 'application/json'
+  }
+});
 
+//Экземпляр класса Section
+const cardObject = new Section((item) => {
+    const cardElement = newCard(item.name, item.link, template);
+
+    cardObject.addItem(cardElement);
+  }, elementsCards);
 
 //Экземпляр класса PopupWithImage
 const instancePopupImage = new PopupWithImage(popupViewImage);
@@ -63,14 +78,16 @@ function newCard (name, link, template){
 
 
 //Загрузка карточек при загрузке страницы
-const cardObject = new Section({item: initialCards, 
-  renderer: (item) => {
-    const cardElement = newCard(item.name, item.link, template);
 
-    cardObject.addItem(cardElement);
-  }
-}, elementsCards);
-cardObject.render();
+
+api.getCard()
+  .then((item) =>{    
+    cardObject.render(item);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 
 
 //Добавление новой карточки
