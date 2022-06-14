@@ -1,13 +1,17 @@
 
 
 export class Card {
-  constructor(data, template, handleCardClick) {
-    this._likeCount = data.likes.length;
+  constructor(data, template, userId, {handleCardClick, setLike, deleteLike}) {
+    this._data = data;
+    this._userId = userId;
+    console.log(this._userId);
     this._description = data.name;
+    this._idUser = data.owner._id;
     this._image = data.link;
     this._template = template;
     this._handleCardClick = handleCardClick;
-    console.log(this._likeCount);
+    this._setLike = setLike;
+    this._deleteLike = deleteLike;
   }
 
   //Приватный метод выбора элемента template
@@ -21,31 +25,62 @@ export class Card {
     this._elementCard.remove();
   }
 
-  //Приватный метод Like
-  _togglelike() {
-    this.elementlike.classList.toggle('element__like-button_active');
+  _dellike(data) {
+    this._removeClassLiked();
+    this._deleteLike(data);
   }
+
+  _like(data) {
+    this._addClassLiked();
+    this._setLike(data);
+  }
+
+  _removeClassLiked() {
+    this.elementlike.classList.remove('element__like-button_active');
+  }
+
+  _addClassLiked() {
+    this.elementlike.classList.add('element__like-button_active');
+  }
+
+   _setUsersLikes(){
+    this._data.likes.forEach((userId) => {
+      if(userId._id === "377c6e116812fcb6fbbcdcd4"){
+        this.elementlike.classList.add('element__like-button_active');
+      }
+    });
+   }
 
   _setEventListeners() {
     const image = this._elementCard.querySelector('.element__image');
     image.src = this._image;
     image.alt = this._description;
     this.elementlike = this._elementCard.querySelector('.element__like-button');
+    
     this._elementCard.querySelector('.element__delete-button').addEventListener('click', () => {this._removeCard()});
-    this._elementCard.querySelector('.element__like-button').addEventListener('click', () => {this._togglelike()});
+    this._elementCard.querySelector('.element__like-button').addEventListener('click', () => {
+      if (this.elementlike.classList.contains('element__like-button_active')){
+        this._dellike(this._data);
+        console.log('Сработало удаление лайка');
+      }else{
+        this._like(this._data);
+        console.log('Сработало добавление лайка');
+      }}
+    );
     this._elementCard.querySelector('.element__image').addEventListener('click', () => {this._handleCardClick({name: image.alt, link: image.src})});
   }
 
-  setLike(){
-
+  setLikeCount(data){
+    this._elementCard.querySelector('.element__like-count').textContent = data.likes.length;
   }
 
   //Публичный метод создания новой карточки
   getCard () {
     this._elementCard = this._getTemplate();
     this._elementCard.querySelector('.element__description').textContent = this._description;
-    this._elementCard.querySelector('.element__like-count').textContent = this._likeCount;
+    this.setLikeCount(this._data);
     this._setEventListeners();
+    this._setUsersLikes();
 
     return this._elementCard;
   }

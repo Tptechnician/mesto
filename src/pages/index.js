@@ -36,12 +36,8 @@ const api = new Api({
   }
 });
 
-//Экземпляр класса Section
-const cardObject = new Section((item) => {
-    const cardElement = newCard(item, template);
 
-    cardObject.addItem(cardElement);
-  }, elementsCards);
+
 
 //Экземпляр класса PopupWithImage
 const instancePopupImage = new PopupWithImage(popupViewImage);
@@ -68,25 +64,60 @@ const enableValidation = (config) => {
 enableValidation(config);
 
 
-//Функция создания карточки
-function newCard (data, template){
-  const newCard = new Card(data, template, ({name, link}) => {
-    instancePopupImage.open({name, link});
-  }).getCard();
+//Экземпляр класса Section
+const cardObject = new Section((item) => {
+    const cardElement = newCards(item, template);
+    
+    cardObject.addItem(cardElement);
+  }, elementsCards);
 
-  return newCard;
+//Функция создания карточки
+function newCards (data, template, userId){
+  const newCard = new Card(data, template, userId,{handleCardClick: ({name, link}) => {
+    instancePopupImage.open({name, link});
+  }, setLike: (data) => {
+    
+    api.addLike(data)
+        .then((data) => {
+          newCard.setLikeCount(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+  }, deleteLike: (data) => {
+    
+    api.deleteLike(data)
+        .then((data) => {
+          newCard.setLikeCount(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+  }
+
+});
+  return newCard.getCard();
 }
 
 
 //Загрузка карточек при загрузке страницы
-api.getCard()
-  .then((item) =>{
-    cardObject.render(item);
+
+let userId = '';
+
+
+api.getUserData()
+  .then((data) => {
+    const [userData, cardsData] = data;
+    userId = userData._id;
+    console.log(userId);
+    cardObject.render(cardsData);
+  })
+  .then(() =>{
+    
   })
   .catch((err) => {
     console.log(err);
   });
-
 
 
 //Добавление новой карточки
@@ -94,7 +125,7 @@ const formAddImg = new PopupWithForm({popupSelector: popupAddImage,
   submit: (data) => {
     api.addCard(data)
       .then((res) =>{
-        const card = newCard(res, template);
+        const card = newCards(res, template, userId);
         cardObject.addItemPrepend(card);
       })
       .catch((err) => {
