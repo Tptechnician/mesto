@@ -12,8 +12,8 @@ export class UserInfo {
     return data;
   };
 
-  setUserInfo(data) {
-    this._profileName.textContent = data.inputname;
-    this._profileActivity.textContent = data.inputactivity;
+  setUserInfo(name, activity) {
+    this._profileName.textContent = name;
+    this._profileActivity.textContent = activity;
   };
 };

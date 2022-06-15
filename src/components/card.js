@@ -45,26 +45,31 @@ export class Card {
 
    _setUsersLikes(){
     this._data.likes.forEach((userId) => {
-      if(userId._id === "377c6e116812fcb6fbbcdcd4"){
+      if(userId._id === this._userId){
         this.elementlike.classList.add('element__like-button_active');
       }
     });
    }
+
+   _setDeleteButton(){
+      if(this._data.owner._id === this._userId){
+        this._deleteButton.classList.add('element__delete-button_active');
+      }
+    };
+   
 
   _setEventListeners() {
     const image = this._elementCard.querySelector('.element__image');
     image.src = this._image;
     image.alt = this._description;
     this.elementlike = this._elementCard.querySelector('.element__like-button');
-    
-    this._elementCard.querySelector('.element__delete-button').addEventListener('click', () => {this._removeCard()});
+    this._deleteButton = this._elementCard.querySelector('.element__delete-button');
+    this._deleteButton.addEventListener('click', () => {this._removeCard()});
     this._elementCard.querySelector('.element__like-button').addEventListener('click', () => {
       if (this.elementlike.classList.contains('element__like-button_active')){
         this._dellike(this._data);
-        console.log('Сработало удаление лайка');
       }else{
         this._like(this._data);
-        console.log('Сработало добавление лайка');
       }}
     );
     this._elementCard.querySelector('.element__image').addEventListener('click', () => {this._handleCardClick({name: image.alt, link: image.src})});
@@ -81,6 +86,7 @@ export class Card {
     this.setLikeCount(this._data);
     this._setEventListeners();
     this._setUsersLikes();
+    this._setDeleteButton();
 
     return this._elementCard;
   }

@@ -65,8 +65,8 @@ enableValidation(config);
 
 
 //Экземпляр класса Section
-const cardObject = new Section((item) => {
-    const cardElement = newCards(item, template);
+const cardObject = new Section((item, userId) => {
+    const cardElement = newCards(item, template, userId);
     
     cardObject.addItem(cardElement);
   }, elementsCards);
@@ -100,22 +100,13 @@ function newCards (data, template, userId){
 }
 
 
-//Загрузка карточек при загрузке страницы
-
-let userId = '';
-
-
+//Загрузка карточек и данных пользователя при загрузке страницы
 api.getUserData()
-  .then((data) => {
-    const [userData, cardsData] = data;
-    userId = userData._id;
-    console.log(userId);
-    cardObject.render(cardsData);
-  })
-  .then(() =>{
-    
-  })
-  .catch((err) => {
+  .then(([userData, cardsData]) => {
+    console.log(cardsData);
+    userInfo.setUserInfo(userData.name, userData.about);
+    cardObject.render(cardsData, userData._id);
+  }).catch((err) => {
     console.log(err);
   });
 
@@ -125,12 +116,12 @@ const formAddImg = new PopupWithForm({popupSelector: popupAddImage,
   submit: (data) => {
     api.addCard(data)
       .then((res) =>{
-        const card = newCards(res, template, userId);
+        const card = newCards(res, template, res.owner._id);
         cardObject.addItemPrepend(card);
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
     
     formAddImg.close();
   }});
@@ -139,7 +130,8 @@ const formAddImg = new PopupWithForm({popupSelector: popupAddImage,
 //Редоктирование профиля
 const formProfile = new PopupWithForm({popupSelector: popupProfile,
   submit: (data) => {
-    userInfo.setUserInfo(data);
+    userInfo.setUserInfo(data.inputname, data.inputactivity);
+    console.log(data);
     
     formProfile.close();
   }});

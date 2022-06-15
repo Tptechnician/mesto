@@ -12,9 +12,9 @@ export class Section {
     this._container.append(element);
   };
 
-  render(item) {
+  render(item, userId) {
     item.forEach((item) => {
-      this._renderer(item);
+      this._renderer(item, userId);
     });
   };
 };
