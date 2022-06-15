@@ -46,6 +46,37 @@ export class Api {
   });
   }
 
+  setUserInfo(data) {
+    return fetch(`${this._url}/users/me`, {
+      headers: this._headers,
+      method: 'PATCH',
+      body: JSON.stringify({
+        name: data.inputname, 
+        about: data.inputactivity
+      })
+    }).then((res) => {
+      if(res.ok){
+      return res.json()
+    }
+    return Promise.reject('Ошибка');
+  });
+  }
+
+  setUserAvatar(data) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      headers: this._headers,
+      method: 'PATCH',
+      body: JSON.stringify({
+        avatar: data.inputlink
+      })
+    }).then((res) => {
+      if(res.ok){
+      return res.json()
+    }
+    return Promise.reject('Ошибка');
+  });
+  }
+
 
   getCard(){
     return fetch(`${this._url}/cards`, {

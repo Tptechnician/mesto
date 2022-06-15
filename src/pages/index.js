@@ -43,7 +43,7 @@ const api = new Api({
 const instancePopupImage = new PopupWithImage(popupViewImage);
 
 //Экземпляр класса UserInfo
-const userInfo = new UserInfo ({name: profileName, activity: profileActivity});
+const userInfo = new UserInfo ({name: profileName, activity: profileActivity, avatar:profileAvatarImg});
 
 
 //Запуск валидации
@@ -105,6 +105,7 @@ api.getUserData()
   .then(([userData, cardsData]) => {
     console.log(cardsData);
     userInfo.setUserInfo(userData.name, userData.about);
+    userInfo.setUserAvatar(userData.avatar)
     cardObject.render(cardsData, userData._id);
   }).catch((err) => {
     console.log(err);
@@ -130,16 +131,30 @@ const formAddImg = new PopupWithForm({popupSelector: popupAddImage,
 //Редоктирование профиля
 const formProfile = new PopupWithForm({popupSelector: popupProfile,
   submit: (data) => {
-    userInfo.setUserInfo(data.inputname, data.inputactivity);
-    console.log(data);
+    api.setUserInfo(data)
+      .then((res) =>{
+        userInfo.setUserInfo(res.name, res.about);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    
     
     formProfile.close();
   }});
 
-// Редоктирование картинки Аватара
+//Редоктирование картинки Аватара
   const formAvatar = new PopupWithForm({popupSelector: popupAvatar,
     submit: (data) => {
-      profileAvatarImg.src = data.inputlink;
+      api.setUserAvatar(data)
+      .then((res) =>{
+        userInfo.setUserAvatar(res.avatar);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+
+      
       formAvatar.close();
     }});
 

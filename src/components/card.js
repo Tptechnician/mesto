@@ -4,7 +4,6 @@ export class Card {
   constructor(data, template, userId, {handleCardClick, setLike, deleteLike}) {
     this._data = data;
     this._userId = userId;
-    console.log(this._userId);
     this._description = data.name;
     this._idUser = data.owner._id;
     this._image = data.link;
