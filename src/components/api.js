@@ -4,12 +4,23 @@ export class Api {
     this._headers = data.headers;
   }
 
+  deleteCard(data) {
+    return fetch(`${this._url}/cards/${data._id}`, {
+      headers: this._headers,
+      method: 'DELETE'
+    }).then((res) => {
+        if(res.ok){
+        return res.json()
+      }
+      return Promise.reject('Ошибка');
+    });
+  }
+
   deleteLike(data){
     return fetch(`${this._url}/cards/likes/${data._id}`, {
       headers: this._headers,
       method: 'DELETE'
-    })
-      .then((res) => {
+    }).then((res) => {
         if(res.ok){
         return res.json()
       }
@@ -21,8 +32,7 @@ export class Api {
     return fetch(`${this._url}/cards/likes/${data._id}`, {
       headers: this._headers,
       method: 'PUT'
-    })
-      .then((res) => {
+    }).then((res) => {
         if(res.ok){
         return res.json()
       }
@@ -82,8 +92,7 @@ export class Api {
     return fetch(`${this._url}/cards`, {
       headers: this._headers,
       method: 'GET'
-    })
-      .then((res) => {
+    }).then((res) => {
         if(res.ok){
         return res.json()
       }
@@ -100,8 +109,7 @@ export class Api {
       headers: this._headers,
       method: 'POST',
       body: JSON.stringify(dataCard),
-    })
-    .then((res) => {
+    }).then((res) => {
       if(res.ok){
       return res.json()
     }

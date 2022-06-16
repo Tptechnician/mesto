@@ -1,7 +1,7 @@
 
 
 export class Card {
-  constructor(data, template, userId, {handleCardClick, setLike, deleteLike}) {
+  constructor(data, template, userId, {handleCardClick, setLike, deleteLike, deleteCard}) {
     this._data = data;
     this._userId = userId;
     this._description = data.name;
@@ -11,6 +11,7 @@ export class Card {
     this._handleCardClick = handleCardClick;
     this._setLike = setLike;
     this._deleteLike = deleteLike;
+    this._deleteCard = deleteCard;
   }
 
   //Приватный метод выбора элемента template
@@ -19,8 +20,12 @@ export class Card {
     return cardElement;
   }
 
+  deleteCard() {
+    this._removeCard(this._elementCard);
+  }
   //Приватный метод удаление карточки
   _removeCard() {
+    console.log('функция удаления removeCard сработала');
     this._elementCard.remove();
   }
 
@@ -63,7 +68,7 @@ export class Card {
     image.alt = this._description;
     this.elementlike = this._elementCard.querySelector('.element__like-button');
     this._deleteButton = this._elementCard.querySelector('.element__delete-button');
-    this._deleteButton.addEventListener('click', () => {this._removeCard()});
+    this._deleteButton.addEventListener('click', () => {this._deleteCard(this._data)});
     this._elementCard.querySelector('.element__like-button').addEventListener('click', () => {
       if (this.elementlike.classList.contains('element__like-button_active')){
         this._dellike(this._data);

@@ -7,6 +7,8 @@ import {PopupWithImage} from'../components/PopupWithImage.js'
 import {PopupWithForm} from'../components/PopupWithForm.js'
 import {UserInfo} from '../components/UserInfo.js'
 import {Api} from '../components/api.js'
+import {PopupWithConfirmation} from '../components/PopupWithConfirmation.js'
+
 
 import {
   popupViewImage,
@@ -23,6 +25,7 @@ import {
   avatarButton,
   popupAvatar,
   profileAvatarImg,
+  popupDelete,
   config
 } from '../scripts/constants.js';
 import { data } from 'autoprefixer';
@@ -38,13 +41,14 @@ const api = new Api({
 
 
 
-
 //Экземпляр класса PopupWithImage
 const instancePopupImage = new PopupWithImage(popupViewImage);
 
 //Экземпляр класса UserInfo
 const userInfo = new UserInfo ({name: profileName, activity: profileActivity, avatar:profileAvatarImg});
 
+//Экземпляр класса PopupWithConfirmation
+const popupWithConfirmation = new PopupWithConfirmation(popupDelete);
 
 //Запуск валидации
 const formValidators = {};
@@ -71,12 +75,18 @@ const cardObject = new Section((item, userId) => {
     cardObject.addItem(cardElement);
   }, elementsCards);
 
+  function popupDeleteCard(data) {
+    popupWithConfirmation.open();
+    popupWithConfirmation.setSubmitAction(() => {
+      removeCard(data);
+    });
+  }
+
 //Функция создания карточки
 function newCards (data, template, userId){
   const newCard = new Card(data, template, userId,{handleCardClick: ({name, link}) => {
     instancePopupImage.open({name, link});
   }, setLike: (data) => {
-    
     api.addLike(data)
         .then((data) => {
           newCard.setLikeCount(data);
@@ -85,7 +95,6 @@ function newCards (data, template, userId){
           console.log(err);
         })
   }, deleteLike: (data) => {
-    
     api.deleteLike(data)
         .then((data) => {
           newCard.setLikeCount(data);
@@ -93,8 +102,19 @@ function newCards (data, template, userId){
         .catch((err) => {
           console.log(err);
         })
+  }, deleteCard: (data) => {
+    popupWithConfirmation.open()
+    popupWithConfirmation.setEventListener(()=>{
+      api.deleteCard(data)
+        .then(() => {
+          newCard.deleteCard();
+          popupWithConfirmation.close()
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    })
   }
-
 });
   return newCard.getCard();
 }
@@ -143,6 +163,7 @@ const formProfile = new PopupWithForm({popupSelector: popupProfile,
     formProfile.close();
   }});
 
+
 //Редоктирование картинки Аватара
   const formAvatar = new PopupWithForm({popupSelector: popupAvatar,
     submit: (data) => {
@@ -154,7 +175,6 @@ const formProfile = new PopupWithForm({popupSelector: popupProfile,
         console.log(err);
       })
 
-      
       formAvatar.close();
     }});
 
