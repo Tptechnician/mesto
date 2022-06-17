@@ -4,17 +4,20 @@ export class Api {
     this._headers = data.headers;
   }
 
+  //Проверка ответа сервера
+  _getResponseData(res) {
+    if (!res.ok) {
+        return Promise.reject(`Ошибка: ${res.status}`); 
+    }
+    return res.json();
+  } 
+
   //Запрос на удаление карточки
   deleteCard(data) {
     return fetch(`${this._url}/cards/${data._id}`, {
       headers: this._headers,
       method: 'DELETE'
-    }).then((res) => {
-        if(res.ok){
-        return res.json()
-      }
-      return Promise.reject('Ошибка');
-    });
+    }).then(this._getResponseData);
   }
 
   //Запрос на удаление лайка
@@ -22,12 +25,7 @@ export class Api {
     return fetch(`${this._url}/cards/likes/${data._id}`, {
       headers: this._headers,
       method: 'DELETE'
-    }).then((res) => {
-        if(res.ok){
-        return res.json()
-      }
-      return Promise.reject('Ошибка');
-    });
+    }).then(this._getResponseData);
   }
 
   //Запрос на добавление лайка
@@ -35,12 +33,7 @@ export class Api {
     return fetch(`${this._url}/cards/likes/${data._id}`, {
       headers: this._headers,
       method: 'PUT'
-    }).then((res) => {
-        if(res.ok){
-        return res.json()
-      }
-      return Promise.reject('Ошибка');
-    });
+    }).then(this._getResponseData);
   }
 
   //Запрос на добовление карточек
@@ -53,12 +46,7 @@ export class Api {
       headers: this._headers,
       method: 'POST',
       body: JSON.stringify(dataCard),
-    }).then((res) => {
-      if(res.ok){
-      return res.json()
-    }
-    return Promise.reject('Ошибка');
-  });
+    }).then(this._getResponseData);
   }
 
   //Запрос на получение информации о пользователе и карточек
@@ -71,12 +59,7 @@ export class Api {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,
       method: 'GET'
-    }).then((res) => {
-      if(res.ok){
-      return res.json()
-    }
-    return Promise.reject('Ошибка');
-  });
+    }).then(this._getResponseData);
   }
 
   //Запрос на получение карточек
@@ -84,12 +67,7 @@ export class Api {
     return fetch(`${this._url}/cards`, {
       headers: this._headers,
       method: 'GET'
-    }).then((res) => {
-        if(res.ok){
-        return res.json()
-      }
-      return Promise.reject('Ошибка');
-    });
+    }).then(this._getResponseData);
   }
 
   //Запрос на изменение информации о пользователе
@@ -101,12 +79,7 @@ export class Api {
         name: data.inputname, 
         about: data.inputactivity
       })
-    }).then((res) => {
-      if(res.ok){
-      return res.json()
-    }
-    return Promise.reject('Ошибка');
-  });
+    }).then(this._getResponseData);
   }
 
   //Запрос на изменение картинки пользователя
@@ -117,11 +90,6 @@ export class Api {
       body: JSON.stringify({
         avatar: data.inputlink
       })
-    }).then((res) => {
-      if(res.ok){
-      return res.json()
-    }
-    return Promise.reject('Ошибка');
-  });
+    }).then(this._getResponseData);
   }
 }

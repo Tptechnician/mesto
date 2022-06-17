@@ -28,16 +28,6 @@ export class Card {
   }
 
   //Методы постановки, удаления, проверки и установки колличества лайков
-  _dellike(data) {
-    this._removeClassLiked();
-    this._deleteLike(data);
-  }
-
-  _like(data) {
-    this._addClassLiked();
-    this._setLike(data);
-  }
-
   _removeClassLiked() {
     this.elementlike.classList.remove('element__like-button_active');
   }
@@ -74,9 +64,9 @@ export class Card {
     this._deleteButton.addEventListener('click', () => {this._deleteCard(this._data)});
     this._elementCard.querySelector('.element__like-button').addEventListener('click', () => {
       if (this.elementlike.classList.contains('element__like-button_active')){
-        this._dellike(this._data);
+        this._deleteLike(this._data);
       }else{
-        this._like(this._data);
+        this._setLike(this._data);
       }}
     );
     this._elementCard.querySelector('.element__image').addEventListener('click', () => {this._handleCardClick({name: image.alt, link: image.src})});

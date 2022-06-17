@@ -1,11 +1,11 @@
 import './index.css';
-import {Card} from '../components/card.js'
+import {Card} from '../components/Card.js'
 import {FormValidator} from'../components/FormValidator.js'
 import {Section} from'../components/Section.js'
 import {PopupWithImage} from'../components/PopupWithImage.js'
 import {PopupWithForm} from'../components/PopupWithForm.js'
 import {UserInfo} from '../components/UserInfo.js'
-import {Api} from '../components/api.js'
+import {Api} from '../components/Api.js'
 import {PopupWithConfirmation} from '../components/PopupWithConfirmation.js'
 
 
@@ -74,12 +74,6 @@ const cardObject = new Section((item, userId) => {
     cardObject.addItem(cardElement);
   }, elementsCards);
 
-  function popupDeleteCard(data) {
-    popupWithConfirmation.open();
-    popupWithConfirmation.setSubmitAction(() => {
-      removeCard(data);
-    });
-  }
 
 //Функция создания карточки
 function newCards (data, template, userId){
@@ -89,6 +83,7 @@ function newCards (data, template, userId){
     api.addLike(data)
         .then((data) => {
           newCard.setLikeCount(data);
+          newCard._addClassLiked();
         })
         .catch((err) => {
           console.log(err);
@@ -97,6 +92,7 @@ function newCards (data, template, userId){
     api.deleteLike(data)
         .then((data) => {
           newCard.setLikeCount(data);
+          newCard._removeClassLiked();
         })
         .catch((err) => {
           console.log(err);
@@ -138,13 +134,13 @@ const formAddImg = new PopupWithForm({popupSelector: popupAddImage,
       .then((res) =>{
         const card = newCards(res, template, res.owner._id);
         cardObject.addItemPrepend(card);
+        formAddImg.close();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(()=>{
         formAddImg.renderLoading(false);
-        formAddImg.close();
       })
   }});
 
@@ -156,13 +152,13 @@ const formProfile = new PopupWithForm({popupSelector: popupProfile,
     api.setUserInfo(data)
       .then((res) =>{
         userInfo.setUserInfo(res.name, res.about);
+        formProfile.close();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(()=>{
         formProfile.renderLoading(false);
-        formProfile.close();
       })
   }});
 
@@ -174,13 +170,13 @@ const formProfile = new PopupWithForm({popupSelector: popupProfile,
       api.setUserAvatar(data)
       .then((res) =>{
         userInfo.setUserAvatar(res.avatar);
+        formAvatar.close();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(()=>{
         formAvatar.renderLoading(false);
-        formAvatar.close();
       })
     }});
 
