@@ -1,5 +1,4 @@
 import './index.css';
-//import {initialCards} from '../scripts/cards.js'
 import {Card} from '../components/card.js'
 import {FormValidator} from'../components/FormValidator.js'
 import {Section} from'../components/Section.js'
@@ -104,7 +103,7 @@ function newCards (data, template, userId){
         })
   }, deleteCard: (data) => {
     popupWithConfirmation.open()
-    popupWithConfirmation.setEventListener(()=>{
+    popupWithConfirmation.handleEvtSubmit(()=>{
       api.deleteCard(data)
         .then(() => {
           newCard.deleteCard();
@@ -123,7 +122,6 @@ function newCards (data, template, userId){
 //Загрузка карточек и данных пользователя при загрузке страницы
 api.getUserData()
   .then(([userData, cardsData]) => {
-    console.log(cardsData);
     userInfo.setUserInfo(userData.name, userData.about);
     userInfo.setUserAvatar(userData.avatar)
     cardObject.render(cardsData, userData._id);
@@ -135,6 +133,7 @@ api.getUserData()
 //Добавление новой карточки
 const formAddImg = new PopupWithForm({popupSelector: popupAddImage, 
   submit: (data) => {
+    formAddImg.renderLoading(true)
     api.addCard(data)
       .then((res) =>{
         const card = newCards(res, template, res.owner._id);
@@ -143,14 +142,17 @@ const formAddImg = new PopupWithForm({popupSelector: popupAddImage,
       .catch((err) => {
         console.log(err);
       })
-    
-    formAddImg.close();
+      .finally(()=>{
+        formAddImg.renderLoading(false);
+        formAddImg.close();
+      })
   }});
 
 
 //Редоктирование профиля
 const formProfile = new PopupWithForm({popupSelector: popupProfile,
   submit: (data) => {
+    formProfile.renderLoading(true)
     api.setUserInfo(data)
       .then((res) =>{
         userInfo.setUserInfo(res.name, res.about);
@@ -158,15 +160,17 @@ const formProfile = new PopupWithForm({popupSelector: popupProfile,
       .catch((err) => {
         console.log(err);
       })
-    
-    
-    formProfile.close();
+      .finally(()=>{
+        formProfile.renderLoading(false);
+        formProfile.close();
+      })
   }});
 
 
 //Редоктирование картинки Аватара
   const formAvatar = new PopupWithForm({popupSelector: popupAvatar,
     submit: (data) => {
+      formAvatar.renderLoading(true)
       api.setUserAvatar(data)
       .then((res) =>{
         userInfo.setUserAvatar(res.avatar);
@@ -174,8 +178,10 @@ const formProfile = new PopupWithForm({popupSelector: popupProfile,
       .catch((err) => {
         console.log(err);
       })
-
-      formAvatar.close();
+      .finally(()=>{
+        formAvatar.renderLoading(false);
+        formAvatar.close();
+      })
     }});
 
 
@@ -185,7 +191,6 @@ profileAddButton.addEventListener('click', () => {
   formValidators['formPopupAddImage'].resetValidation();
   formAddImg.open();
 });
-
 
 // Обработчик открытие popup редоктирования профиля
 profileEditButton.addEventListener('click', () => {
@@ -204,3 +209,6 @@ avatarButton.addEventListener('click', () => {
   formValidators['formPopupAvatar'].resetValidation();
   formAvatar.open();
 });
+
+// Добавление обработчика submit popup удаления карточки
+popupWithConfirmation.setEventListener();

@@ -1,5 +1,3 @@
-
-
 export class Card {
   constructor(data, template, userId, {handleCardClick, setLike, deleteLike, deleteCard}) {
     this._data = data;
@@ -20,15 +18,16 @@ export class Card {
     return cardElement;
   }
 
+  //Методы удаления карточки
   deleteCard() {
     this._removeCard(this._elementCard);
   }
-  //Приватный метод удаление карточки
+  
   _removeCard() {
-    console.log('функция удаления removeCard сработала');
     this._elementCard.remove();
   }
 
+  //Методы постановки, удаления, проверки и установки колличества лайков
   _dellike(data) {
     this._removeClassLiked();
     this._deleteLike(data);
@@ -47,21 +46,25 @@ export class Card {
     this.elementlike.classList.add('element__like-button_active');
   }
 
-   _setUsersLikes(){
+  _setUsersLikes(){
     this._data.likes.forEach((userId) => {
       if(userId._id === this._userId){
         this.elementlike.classList.add('element__like-button_active');
       }
     });
-   }
+  }
+  setLikeCount(data){
+      this._elementCard.querySelector('.element__like-count').textContent = data.likes.length;
+    }
 
-   _setDeleteButton(){
-      if(this._data.owner._id === this._userId){
-        this._deleteButton.classList.add('element__delete-button_active');
-      }
-    };
+  //Приватный метод установки кнопки удаления карточки
+  _setDeleteButton(){
+    if(this._data.owner._id === this._userId){
+      this._deleteButton.classList.add('element__delete-button_active');
+    }
+  };
    
-
+  //Приватный метод установки обработчико событий карточки
   _setEventListeners() {
     const image = this._elementCard.querySelector('.element__image');
     image.src = this._image;
@@ -77,10 +80,6 @@ export class Card {
       }}
     );
     this._elementCard.querySelector('.element__image').addEventListener('click', () => {this._handleCardClick({name: image.alt, link: image.src})});
-  }
-
-  setLikeCount(data){
-    this._elementCard.querySelector('.element__like-count').textContent = data.likes.length;
   }
 
   //Публичный метод создания новой карточки

@@ -6,10 +6,16 @@ export class PopupWithConfirmation extends Popup{
     this._form = this._popupSelector.querySelector('.popup__form');
   }
 
-  setEventListener(fndel){
+  //Метод для передачи колбека функции удаления карточки в обработчик submit
+  handleEvtSubmit(fndel) {
+    this._funDelCard = fndel;
+  };
+
+  //метод установки обработчика submit
+  setEventListener(){
     this._form.addEventListener('submit', (e)=>{
       e.preventDefault();
-      fndel();
+      this._funDelCard();
     });
-  }
+  };
 }
