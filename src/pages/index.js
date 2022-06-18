@@ -100,6 +100,7 @@ function newCards (data, template, userId){
   }, deleteCard: (data) => {
     popupWithConfirmation.open()
     popupWithConfirmation.handleEvtSubmit(()=>{
+     popupWithConfirmation.renderLoading(true)
       api.deleteCard(data)
         .then(() => {
           newCard.deleteCard();
@@ -107,6 +108,9 @@ function newCards (data, template, userId){
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(()=>{
+          popupWithConfirmation.renderLoading(false);
         })
     })
   }
